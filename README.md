@@ -4,7 +4,7 @@
 
 JSON schemas for design system manifests — tokens, utilities, and CEM extensions.
 
-Used by the [Design Lasagna Language Server](https://github.com/designlasagna/language-server) for IntelliSense, diagnostics, and code actions. Also useful for CI validation, documentation tooling, and build pipelines.
+Used by the [Design Lasagna Language Server](https://github.com/designlasagna/ds-language-server) for IntelliSense, diagnostics, and code actions. Also useful for CI validation, documentation tooling, and build pipelines.
 
 ## Schemas
 
