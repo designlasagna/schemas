@@ -1,0 +1,28 @@
+{
+  "name": "@designlasagna/schemas",
+  "version": "0.2.0",
+  "description": "JSON schemas for design system manifests — tokens, utilities, and CEM extensions. Multi-platform.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/designlasagna/schemas"
+  },
+  "homepage": "https://designlasagna.recipes",
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "json-schema",
+    "custom-elements-manifest",
+    "css-utilities",
+    "lsp",
+    "multi-platform"
+  ],
+  "exports": {
+    "./v0.2/tokens.json": "./v0.2/tokens.json",
+    "./v0.2/utilities.json": "./v0.2/utilities.json",
+    "./v0.2/cem-extensions.json": "./v0.2/cem-extensions.json"
+  },
+  "files": [
+    "v0.2/"
+  ]
+}
