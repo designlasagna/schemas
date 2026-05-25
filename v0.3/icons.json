@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://designlasagna.recipes/v0.3/icons.json",
+  "title": "Design System Icons Manifest",
+  "description": "Schema for resolved icon manifests consumed by language servers and tooling.",
+  "type": "object",
+  "required": ["schemaVersion", "icons"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "string", "description": "Schema version (semver)" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "designSystem": { "$ref": "#/definitions/DesignSystemMeta" },
+    "icons": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/Icon" }
+    }
+  },
+  "definitions": {
+    "DesignSystemMeta": {
+      "type": "object",
+      "description": "Identity of the design system that produced this manifest.",
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "documentation": { "type": "string", "format": "uri" },
+        "package": { "type": "string" },
+        "docsTemplates": {
+          "type": "object",
+          "properties": {
+            "url": { "type": "string" },
+            "figma": { "type": "string" },
+            "storybook": { "type": "string" }
+          },
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "Icon": {
+      "type": "object",
+      "required": ["name", "platforms"],
+      "properties": {
+        "name": { "type": "string", "description": "Icon identifier" },
+        "description": { "type": "string" },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Search keywords for autocomplete and AI matching"
+        },
+        "category": { "type": "string" },
+        "sizes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Available sizes (e.g. '16', '24', '32')"
+        },
+        "variants": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Style variants (e.g. 'outlined', 'filled', 'rounded')"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Sort weight for autocomplete (0 lowest, 100 highest)."
+        },
+        "since": {
+          "type": "string",
+          "description": "Version or date when this icon was introduced."
+        },
+        "docs": { "$ref": "#/definitions/Docs" },
+        "platforms": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Platform-specific icon references. At least one platform is required.",
+          "additionalProperties": { "$ref": "#/definitions/PlatformIcon" }
+        },
+        "deprecated": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/definitions/Deprecated" }
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "PlatformIcon": {
+      "type": "object",
+      "properties": {
+        "import": { "type": "string" },
+        "usage": { "type": "string" },
+        "component": { "type": "string" }
+      },
+      "oneOf": [
+        { "required": ["import"] },
+        { "required": ["usage"] },
+        { "required": ["component"] }
+      ],
+      "additionalProperties": true
+    },
+    "Docs": {
+      "type": "object",
+      "description": "Documentation links for this item.",
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "figma": { "type": "string", "format": "uri" },
+        "storybook": { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": { "type": "string", "format": "uri" }
+    },
+    "Deprecated": {
+      "type": "object",
+      "required": ["message"],
+      "properties": {
+        "message": { "type": "string" },
+        "removal": { "type": "string" },
+        "replacement": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://designlasagna.recipes/v0.3/cem-extensions.json",
+  "title": "CEM Extensions for Design Systems",
+  "description": "Extensions to Custom Elements Manifest for design system lifecycle metadata.",
+  "definitions": {
+    "LifecycleFields": {
+      "type": "object",
+      "description": "Fields that can be added to CEM declarations or members.",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Lifecycle status. Common values: 'draft', 'experimental', 'beta', 'rc', 'stable', 'deprecated', 'removed'. Any string is allowed."
+        },
+        "removal": {
+          "type": "string",
+          "description": "When the deprecated item will be removed."
+        },
+        "replacement": {
+          "type": "string",
+          "description": "Machine-readable replacement identifier."
+        }
+      }
+    },
+    "DeprecatedValue": {
+      "type": "object",
+      "required": ["value", "message"],
+      "description": "Deprecation info for a specific attribute value.",
+      "properties": {
+        "value": { "type": "string" },
+        "message": { "type": "string" },
+        "removal": { "type": "string" },
+        "replacement": { "type": "string" }
+      }
+    },
+    "AttributeExtensions": {
+      "type": "object",
+      "description": "Extension fields for CEM attribute/member entries.",
+      "properties": {
+        "enum": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "removal": { "type": "string" },
+        "replacement": { "type": "string" },
+        "deprecatedValues": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DeprecatedValue" }
+        }
+      }
+    },
+    "SlotExtensions": {
+      "type": "object",
+      "description": "Extension fields for CEM slot entries.",
+      "properties": {
+        "deprecated": {
+          "oneOf": [
+            { "type": "boolean" },
+            { "type": "string" }
+          ]
+        },
+        "removal": { "type": "string" },
+        "replacement": { "type": "string" }
+      }
+    },
+    "CssPropertyExtensions": {
+      "type": "object",
+      "description": "Extension fields for CEM cssProperty entries.",
+      "properties": {
+        "deprecated": {
+          "oneOf": [
+            { "type": "boolean" },
+            { "type": "string" }
+          ]
+        },
+        "removal": { "type": "string" },
+        "replacement": { "type": "string" }
+      }
+    }
+  }
+}
