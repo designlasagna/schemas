@@ -6,6 +6,7 @@ How a DTCG source tree becomes a v0.3 `tokens.json` manifest. This is the contra
 - Extensions: [`v0.3/dtcg-extensions.json`](../v0.3/dtcg-extensions.json)
 - Output: [`v0.3/tokens.json`](../v0.3/tokens.json)
 - Worked example: [`examples/dtcg-source/`](../examples/dtcg-source) → [`examples/expected/tokens.json`](../examples/expected/tokens.json)
+- Model: [`concepts.md`](./concepts.md) — what groups, modes, collections and tiers each decide, and why only one of them is a hierarchy
 
 ```
 .tokens.json (DTCG)  ──resolve──▶  tokens.json (Lasagna)  ──▶  LSP · docs · CI
