@@ -85,8 +85,7 @@ DTCG 5.2.3 requires tools to preserve extension data they do not understand. Any
 ### R7 — a11y contrast is computed, not authored
 Ratios are derived from resolved colors and `relations` of type `contrast-pair`. Because ratios differ per mode, `wcagContrast` uses the **per-condition map form** — this resolves RFC open question 6. In the example, `color.bg.primary` is 10.19 (light) and 7.09 (dark).
 
-### R8 — No `aliasChain`; `modes` is the alias source
-`aliasChain` was **removed in v0.3**. It was unread by every consumer, its v0.2 data merely duplicated `resolved`, and its `string | string[]` type could not represent a token whose chain differs per mode — `color.bg.primary` resolves via `color.blue.500` in light and `color.blue.300` in dark, which a flat list conflates into one false path.
+### R8 — No `aliasChain`; `modes` is the alias source`aliasChain` was **removed in v0.3**. It was unread by every consumer, its v0.2 data merely duplicated `resolved`, and its `string | string[]` type could not represent a token whose chain differs per mode — `color.bg.primary` resolves via `color.blue.500` in light and `color.blue.300` in dark, which a flat list conflates into one false path.
 
 Consumers derive references from `modes` instead, which is already keyed by condition and therefore correct per mode:
 
@@ -113,3 +112,4 @@ The `A11y.wcagContrast` `oneOf` was unsatisfiable for the map form. `ContrastInf
 2. **Multi-dimension conditions are unexercised.** The example uses one dimension. Add a brand × colorScheme fixture to prove the `dimension:value` key grammar end to end.
 3. **`$deprecated` on a DTCG group** deprecates all descendants; interaction with token-level overrides needs a stated precedence rule.
 4. **`ds-language-server` still declares `aliasChain?: string`** in `src/parsers/tokens.ts`. Dead code — safe to delete.
+5. **JSON Pointer references are not represented in the fixtures.** `token-core` implements DTCG 7.1.2 `$ref` (both whole-token and property-level), but `examples/dtcg-source/` only exercises curly-brace aliases. A fixture covering `$ref` would pin the manifest shape for pointer-based sources.
