@@ -7,7 +7,7 @@
       "recipes.designlasagna": {
         "tier": "primitive",
         "collection": "palette",
-        "group": "Color",
+        "label": "Color",
         "category": "palette",
         "priority": 10,
         "usage": {
@@ -52,7 +52,7 @@
       "recipes.designlasagna": {
         "tier": "primitive",
         "collection": "palette",
-        "group": "Dimension",
+        "label": "Dimension",
         "category": "scale",
         "priority": 10
       }
@@ -67,7 +67,7 @@
       "recipes.designlasagna": {
         "tier": "primitive",
         "collection": "palette",
-        "group": "Typography",
+        "label": "Typography",
         "priority": 10
       }
     },

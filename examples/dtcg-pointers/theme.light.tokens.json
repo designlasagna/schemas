@@ -8,7 +8,7 @@
       "recipes.designlasagna": {
         "tier": "primitive",
         "collection": "theme",
-        "group": "Palette"
+        "label": "Palette"
       }
     },
     "seed": {
@@ -23,7 +23,7 @@
       "recipes.designlasagna": {
         "tier": "semantic",
         "collection": "theme",
-        "group": "Color"
+        "label": "Color"
       }
     },
     "accent": {

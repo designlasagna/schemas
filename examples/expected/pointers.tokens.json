@@ -83,7 +83,7 @@
         "base",
         "blue"
       ],
-      "group": "Base",
+      "label": "Base",
       "collection": "palette",
       "tier": "primitive",
       "type": "color",
@@ -121,7 +121,7 @@
         "base",
         "spacing"
       ],
-      "group": "Base",
+      "label": "Base",
       "collection": "palette",
       "tier": "primitive",
       "type": "dimension",
@@ -154,7 +154,7 @@
         "base",
         "text"
       ],
-      "group": "Base",
+      "label": "Base",
       "collection": "palette",
       "tier": "primitive",
       "type": "typography",
@@ -198,7 +198,7 @@
         "derived",
         "primary"
       ],
-      "group": "Derived",
+      "label": "Derived",
       "collection": "derived",
       "tier": "semantic",
       "type": "color",
@@ -230,7 +230,7 @@
         "derived",
         "primary-hue"
       ],
-      "group": "Derived",
+      "label": "Derived",
       "collection": "derived",
       "tier": "semantic",
       "type": "number",
@@ -259,7 +259,7 @@
         "derived",
         "small"
       ],
-      "group": "Derived",
+      "label": "Derived",
       "collection": "derived",
       "tier": "semantic",
       "type": "dimension",
@@ -294,7 +294,7 @@
         "derived",
         "large"
       ],
-      "group": "Derived",
+      "label": "Derived",
       "collection": "derived",
       "tier": "semantic",
       "type": "dimension",
@@ -329,7 +329,7 @@
         "derived",
         "heading"
       ],
-      "group": "Derived",
+      "label": "Derived",
       "collection": "derived",
       "tier": "semantic",
       "type": "typography",
@@ -373,7 +373,7 @@
         "derived",
         "chained"
       ],
-      "group": "Derived",
+      "label": "Derived",
       "collection": "derived",
       "tier": "semantic",
       "type": "color",
@@ -403,7 +403,7 @@
         "palette",
         "seed"
       ],
-      "group": "Palette",
+      "label": "Palette",
       "collection": "theme",
       "tier": "primitive",
       "type": "color",
@@ -452,7 +452,7 @@
         "color",
         "accent"
       ],
-      "group": "Color",
+      "label": "Color",
       "collection": "theme",
       "tier": "semantic",
       "type": "color",

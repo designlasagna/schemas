@@ -7,7 +7,7 @@
       "recipes.designlasagna": {
         "tier": "primitive",
         "collection": "palette",
-        "group": "Base"
+        "label": "Base"
       }
     },
     "blue": {
@@ -37,7 +37,7 @@
       "recipes.designlasagna": {
         "tier": "semantic",
         "collection": "derived",
-        "group": "Derived"
+        "label": "Derived"
       }
     },
 

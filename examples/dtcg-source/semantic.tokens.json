@@ -8,7 +8,7 @@
       "recipes.designlasagna": {
         "tier": "semantic",
         "collection": "theme",
-        "group": "Border",
+        "label": "Border",
         "category": "radius",
         "type": "borderRadius",
         "priority": 60
@@ -26,7 +26,7 @@
       "recipes.designlasagna": {
         "tier": "semantic",
         "collection": "theme",
-        "group": "Layout",
+        "label": "Layout",
         "category": "spacing",
         "type": "spacing",
         "priority": 70,
@@ -55,7 +55,7 @@
       "recipes.designlasagna": {
         "tier": "semantic",
         "collection": "theme",
-        "group": "Typography",
+        "label": "Typography",
         "category": "style",
         "priority": 65
       }

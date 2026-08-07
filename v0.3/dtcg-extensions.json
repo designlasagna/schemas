@@ -29,9 +29,9 @@
             "gradient", "typography", "transition"
           ]
         },
-        "group": {
+        "label": {
           "type": "string",
-          "description": "Human-facing grouping label for docs. Inheritable. Distinct from DTCG group nesting."
+          "description": "Human-facing display label for docs, e.g. \"Color\", \"Layout\". Inheritable. Unrelated to DTCG group nesting, which is carried by `path` and `id`."
         },
         "category": {
           "type": "string",
@@ -87,7 +87,7 @@
       "properties": {
         "tier": { "type": "string" },
         "collection": { "type": "string" },
-        "group": { "type": "string" },
+        "label": { "type": "string" },
         "category": { "type": "string" },
         "subCategory": { "type": ["string", "null"] },
         "type": {

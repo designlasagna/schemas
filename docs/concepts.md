@@ -206,4 +206,14 @@ structured systems.
 }
 ```
 
-The schema already notes the distinction, but a note is thin protection against a name that reads as the same concept. Renaming it to `label` or `displayGroup` before v0.3 is released would cost one field and remove a permanent source of exactly the confusion this document exists to prevent.
+It is `label` as of v0.3. DTCG nesting is carried by `path` and `id`, and
+nothing else claims the word.
+
+The schema had documented the distinction in a description, which was the
+version of this fix that does not work: a note is read once and a name is read
+every time. Renaming cost one field before release and nothing after, which is
+why the timing mattered more than the size.
+
+One survivor, deliberately: the lint selector `{ "to": { "group": ["color.raw"] } }`
+still says `group`, because there it really does mean DTCG nesting — it selects
+every token under a path. Same word, and this time the same concept.

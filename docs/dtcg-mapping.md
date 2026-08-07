@@ -39,7 +39,7 @@ DTCG cannot express three things Lasagna needs. Everything below follows from th
 | `platforms.*` | `$extensions[NS].platforms` | |
 | `a11y.wcagContrast` | **computed** from resolved colors | Author only overrides |
 | `metadata.extensions` | all **non**-Lasagna `$extensions` | MUST be preserved |
-| `tier` `collection` `group` `category` `priority` `usage` `docs` `keywords` `tags` `since` `format` | `$extensions[NS]`, with group cascade | |
+| `tier` `collection` `label` `category` `priority` `usage` `docs` `keywords` `tags` `since` `format` | `$extensions[NS]`, with group cascade | `label` is a display name for docs ("Color"), not DTCG nesting |
 | `tokenRelations` (root) | hoisted from `$extensions[NS].relations` | Declaring token prepended |
 | `conditions` `collections` `designSystem` `source` | `ds.config.json` | |
 | `counts` | computed | |

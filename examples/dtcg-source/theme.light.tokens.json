@@ -8,7 +8,7 @@
       "recipes.designlasagna": {
         "tier": "semantic",
         "collection": "theme",
-        "group": "Color",
+        "label": "Color",
         "category": "semantic",
         "priority": 90
       }
