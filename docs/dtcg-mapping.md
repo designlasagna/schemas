@@ -116,8 +116,7 @@ A token-level `$ref` replaces `$value` entirely, so such a node is a **token, no
 ### R10 — Platform references are sanitized
 DTCG permits token names that are illegal in a CSS custom property — a group named `ui/legacy` yields `--ds-ui/legacy-accent`. Characters outside `[A-Za-z0-9_-]` are replaced with `-` and a `sanitized-platform-reference` warning is raised. Sanitization can in principle collide; the warning is what surfaces it.
 
-### R11 — `$extends` is expanded before the token walk
-DTCG 6.4 lets a group inherit from another group. Because it changes the shape of the tree, it is resolved first — a file using `$extends` would otherwise lose every inherited token silently, since `$`-prefixed keys are skipped by the walk.
+### R11 — `$extends` is expanded before the token walkDTCG 6.4 lets a group inherit from another group. Because it changes the shape of the tree, it is resolved first — a file using `$extends` would otherwise lose every inherited token silently, since `$`-prefixed keys are skipped by the walk.
 
 Merge semantics (6.4.3) are asymmetric and easy to get wrong:
 
@@ -140,6 +139,23 @@ Cycles are rejected, including the non-obvious case in spec example 16 where a g
 ```
 
 `button-secondary.border` resolves to `#00ffff`, **not** the local `#666666`. DTCG has no relative or self reference — example 15 writes `{extended.color}` explicitly — so this is correct but surprising. A linter rule flagging inherited aliases that point outside the extending group would be worth having.
+
+### R12 — Deprecation is only read from where the schema declares it
+A token counts as deprecated when, and only when, it declares one of:
+
+1. `$extensions["recipes.designlasagna"].deprecated` — with `message`, and optionally `removal` and `replacement`
+2. DTCG `$deprecated` — `true` or a message string
+
+Nothing else is inspected. In particular, a notice written in `$description` — *"Deprecated. Replaced with X. Will be removed 10 jan 2027."* — is prose, and the resolver treats it as prose.
+
+This is deliberate. Design tools upstream of DTCG often expose only a description field, so real systems do carry lifecycle information there, and it is tempting to parse it. Resist it:
+
+- Every convention is different, in every language, and the tail never ends.
+- An inferred `removal` date makes the language server raise hard errors from a regex reading of a sentence.
+- An inferred `replacement` drives a code action, so a wrong guess edits somebody's source.
+- The manifest would assert lifecycle state the source never declared, and schema validation would then be validating an invention.
+
+Migrating prose into one of the two supported forms is the design system author's job, and a one-off one. The resolver's contract is that the manifest reflects what the source actually says.
 
 ## Schema changes this work required
 
