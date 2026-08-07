@@ -116,6 +116,31 @@ A token-level `$ref` replaces `$value` entirely, so such a node is a **token, no
 ### R10 — Platform references are sanitized
 DTCG permits token names that are illegal in a CSS custom property — a group named `ui/legacy` yields `--ds-ui/legacy-accent`. Characters outside `[A-Za-z0-9_-]` are replaced with `-` and a `sanitized-platform-reference` warning is raised. Sanitization can in principle collide; the warning is what surfaces it.
 
+### R11 — `$extends` is expanded before the token walk
+DTCG 6.4 lets a group inherit from another group. Because it changes the shape of the tree, it is resolved first — a file using `$extends` would otherwise lose every inherited token silently, since `$`-prefixed keys are skipped by the walk.
+
+Merge semantics (6.4.3) are asymmetric and easy to get wrong:
+
+| At the same path | Behaviour |
+|---|---|
+| group + group | merge recursively |
+| token + anything | **complete replacement** — not property-by-property |
+| local `$`-property | overrides the inherited one |
+
+References use either syntax (`{group}` or `#/group`) and are **document-scoped**, like `$ref` (R9). Groups are not addressable across files, and expansion runs before files are merged into one token namespace.
+
+Cycles are rejected, including the non-obvious case in spec example 16 where a group extends its own **ancestor** — resolving the parent requires resolving the child.
+
+**Sharp edge: inherited aliases are absolute.** Deep merge copies token definitions verbatim, so an alias inside an inherited token keeps pointing at the original group:
+
+```json
+"button":           { "color": "#00ffff",
+                      "border": { "$value": { "color": "{button.color}" } } },
+"button-secondary": { "$extends": "{button}", "color": "#666666" }
+```
+
+`button-secondary.border` resolves to `#00ffff`, **not** the local `#666666`. DTCG has no relative or self reference — example 15 writes `{extended.color}` explicitly — so this is correct but surprising. A linter rule flagging inherited aliases that point outside the extending group would be worth having.
+
 ## Schema changes this work required
 
 **`ContrastInfo` in `v0.3/tokens.json` — added `required: ["ratio"]` and `additionalProperties: false`.**
@@ -130,7 +155,7 @@ The `A11y.wcagContrast` `oneOf` was unsatisfiable for the map form. `ContrastInf
 2. **Multi-dimension conditions are unexercised.** Both fixtures use one dimension. Add a brand × colorScheme fixture to prove the `dimension:value` key grammar end to end.
 3. **`$deprecated` on a DTCG group** deprecates all descendants; interaction with token-level overrides needs a stated precedence rule.
 4. **`ds-language-server` still declares `aliasChain?: string`** in `src/parsers/tokens.ts`. Dead code — safe to delete.
-5. **`$extends` (DTCG 6.4) is not implemented.** Groups may inherit from other groups with JSON Schema `$ref` deep-merge semantics, including override and circular-reference rules. No fixture covers it and `token-core` ignores it, so a source file using `$extends` currently loses the inherited tokens silently — the same failure mode that token-level `$ref` had.
+5. **Inherited aliases have no relative form.** See R11. Worth a lint rule rather than a schema change.
 
 ## Fixture projects
 
