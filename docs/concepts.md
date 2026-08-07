@@ -142,6 +142,56 @@ An interface should show that shape: the groups as structure, the modes as a vie
 
 ---
 
+## What the labels *mean* is not this schema's business
+
+`tier` looks like it carries semantics — primitives are referenced by semantic
+tokens, which are referenced by component tokens, and primitives are not meant
+for product code. That is a real and useful convention, and it is **one team's
+convention**.
+
+The schema deliberately does not encode it. `tier` is a free string (RFC A6)
+and `status` was made one too (A4) for the same reason: a system that layers
+differently, or names its layers differently, should not have to fight the
+format. "Not prescribing naming conventions" is in the RFC's non-goals.
+
+Tooling still needs to act on these ideas, so the split is:
+
+- **the schema** carries the labels
+- **the project** declares what they mean, in `ds.config.json`
+- **the tooling** provides mechanism — selectors and configurable rules — and
+  no defaults
+
+In practice that means a lint config in the ESLint shape, where a team says
+which tokens are off limits and *what makes them so* — a tier, a collection, a
+group, a tag:
+
+```json
+"lint": {
+  "rules": {
+    "no-reference": ["error", {
+      "from": { "tier": ["component"] },
+      "to":   { "tier": ["primitive"] },
+      "message": "Components must go through a semantic token."
+    }],
+    "reference-direction": ["error", {
+      "by": "tier",
+      "order": ["primitive", "semantic", "component"],
+      "skipped": "warning"
+    }]
+  }
+}
+```
+
+With nothing configured, nothing is checked. A system with no stated layering
+has no layering to violate.
+
+The same intent can be expressed against whichever field the team actually
+organises by — `{ "to": { "collection": ["Primitives"] } }` and
+`{ "to": { "group": ["color.raw"] } }` say the same thing about differently
+structured systems.
+
+---
+
 ## Open question: `group` is an overloaded word
 
 `$extensions["recipes.designlasagna"].group` is a **human-facing label for documentation** — `"Color"`, `"Layout"` — and has nothing to do with DTCG group nesting. Two different things share the word in the same file:
