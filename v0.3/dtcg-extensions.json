@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://designlasagna.recipes/v0.3/dtcg-extensions.json",
   "title": "DTCG Extensions for Design Systems",
-  "description": "Design Lasagna governance metadata carried inside DTCG `$extensions` under the reverse-domain key `recipes.designlasagna`. This is the authoring-side counterpart to v0.3/tokens.json: everything here is human-authored and cannot be derived by a build tool. Resolver output (id, path, resolved, aliasChain) is NOT represented here.",
+  "description": "Design Lasagna governance metadata carried inside DTCG `$extensions` under the reverse-domain key `recipes.designlasagna`. This is the authoring-side counterpart to v0.3/tokens.json: everything here is human-authored and cannot be derived by a build tool. Resolver output (id, path, resolved, modes) is NOT represented here.",
 
   "definitions": {
     "TokenExtensions": {

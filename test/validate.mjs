@@ -103,10 +103,37 @@ const badKeys = tokens.flatMap((t) =>
   Object.keys(t.resolved).filter((k) => !declaredConditions.has(k)).map((k) => `${t.id}:${k}`));
 check('all resolved keys are declared conditions', badKeys.length === 0, badKeys.join(', '));
 
+// `modes` is the sole source of alias information (aliasChain removed in v0.3).
+// Walk authored values recursively so refs nested inside composite values are caught.
+const ALIAS_RE = /\{([^}]+)\}/g;
+function collectRefs(value, out = []) {
+  if (typeof value === 'string') {
+    for (const m of value.matchAll(ALIAS_RE)) out.push(m[1]);
+  } else if (Array.isArray(value)) {
+    for (const v of value) collectRefs(v, out);
+  } else if (value && typeof value === 'object') {
+    for (const v of Object.values(value)) collectRefs(v, out);
+  }
+  return out;
+}
+
 const badAlias = tokens.flatMap((t) =>
-  (Array.isArray(t.aliasChain) ? t.aliasChain : t.aliasChain ? [t.aliasChain] : [])
-    .filter((a) => !byId.has(a)).map((a) => `${t.id} → ${a}`));
-check('every aliasChain target resolves', badAlias.length === 0, badAlias.join(', '));
+  collectRefs(t.modes ?? {})
+    .filter((ref) => !byId.has(ref))
+    .map((ref) => `${t.id} → {${ref}}`));
+check('every alias reference in `modes` resolves', badAlias.length === 0, badAlias.join(', '));
+
+const strayAliasChain = tokens.filter((t) => 'aliasChain' in t).map((t) => t.id);
+check('no token carries `aliasChain` (removed in v0.3)', strayAliasChain.length === 0,
+  strayAliasChain.join(', '));
+
+const leakedRefs = tokens.filter((t) => collectRefs(t.resolved).length > 0).map((t) => t.id);
+check('no unresolved refs leak into `resolved`', leakedRefs.length === 0, leakedRefs.join(', '));
+
+const aliasNoModes = tokens
+  .filter((t) => t.modes && Object.keys(t.modes).length === 0)
+  .map((t) => t.id);
+check('`modes` is never an empty object', aliasNoModes.length === 0, aliasNoModes.join(', '));
 
 const badReplacement = tokens
   .filter((t) => t.deprecated?.replacement && !byId.has(t.deprecated.replacement))

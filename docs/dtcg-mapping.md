@@ -30,9 +30,8 @@ DTCG cannot express three things Lasagna needs. Everything below follows from th
 | `path` | DTCG path segments | |
 | `description` | `$description` | |
 | `type` | `$extensions[NS].type` → else `$type` | Granular wins |
-| `modes` | `$value` per mode file | Authored form, aliases intact |
-| `resolved` | resolved `$value` per mode | See serialization below |
-| `aliasChain` | `{...}` references | Array of token ids traversed |
+| `modes` | `$value` per mode file | Authored form, aliases intact — **the only alias source** |
+| `resolved` | resolved `$value` per mode | See serialization below. MUST be fully resolved |
 | `sourceFiles` | files the token appeared in | |
 | `deprecated` | `$extensions[NS].deprecated` | `$deprecated` alone → `{message}` only |
 | `platforms.web` | derived from `ds.config.json` naming | Overridable |
@@ -86,16 +85,31 @@ DTCG 5.2.3 requires tools to preserve extension data they do not understand. Any
 ### R7 — a11y contrast is computed, not authored
 Ratios are derived from resolved colors and `relations` of type `contrast-pair`. Because ratios differ per mode, `wcagContrast` uses the **per-condition map form** — this resolves RFC open question 6. In the example, `color.bg.primary` is 10.19 (light) and 7.09 (dark).
 
+### R8 — No `aliasChain`; `modes` is the alias source
+`aliasChain` was **removed in v0.3**. It was unread by every consumer, its v0.2 data merely duplicated `resolved`, and its `string | string[]` type could not represent a token whose chain differs per mode — `color.bg.primary` resolves via `color.blue.500` in light and `color.blue.300` in dark, which a flat list conflates into one false path.
+
+Consumers derive references from `modes` instead, which is already keyed by condition and therefore correct per mode:
+
+```json
+"modes":    { "light": "{color.blue.500}", "dark": "{color.blue.300}" },
+"resolved": { "light": "#00427a",         "dark": "#52a8e1" }
+```
+
+Emitters MUST keep `modes` whenever a token references another token, including refs nested inside composite values. `resolved` MUST NOT contain unresolved `{...}` refs. Both are enforced by `test/validate.mjs`.
+
+Building a transitive dependency graph means walking `modes` across tokens — a few lines in `token-core`, done once, rather than a precomputed field that was wrong for multi-mode tokens.
+
 ## Schema changes this work required
 
 **`ContrastInfo` in `v0.3/tokens.json` — added `required: ["ratio"]` and `additionalProperties: false`.**
 
 The `A11y.wcagContrast` `oneOf` was unsatisfiable for the map form. `ContrastInfo` was fully open, so `{"light": {...}, "dark": {...}}` matched *both* branches, and `oneOf` demands exactly one. Any per-mode contrast data would have failed validation. Caught by `test/validate.mjs`.
 
+**`aliasChain` removed from `v0.3/tokens.json`.** See R8. Still present in `v0.2/tokens.json`, which is frozen — a v0.2 → v0.3 migration drops the field, and no consumer needs rewriting because none read it.
+
 ## Open items
 
 1. **No schema for `ds.config.json`.** It is a new artifact carrying `designSystem`, `conditions`, `collections`, `source.files` and platform naming. Needs `v0.3/build-config.json`.
-2. **`aliasChain` semantics are ambiguous.** The schema allows `string | string[]`; the v0.2 reference fixture puts the *final resolved value* (`"2px"`) there, while these fixtures use an *ordered array of token ids*. Both validate. Pick one and document it.
-3. **Multi-dimension conditions are unexercised.** The example uses one dimension. Add a brand × colorScheme fixture to prove the `dimension:value` key grammar end to end.
-4. **`$deprecated` on a DTCG group** deprecates all descendants; interaction with token-level overrides needs a stated precedence rule.
-5. **Composite `aliasChain`** currently flattens all references found inside a composite value. Whether that should be structured per sub-property is undecided.
+2. **Multi-dimension conditions are unexercised.** The example uses one dimension. Add a brand × colorScheme fixture to prove the `dimension:value` key grammar end to end.
+3. **`$deprecated` on a DTCG group** deprecates all descendants; interaction with token-level overrides needs a stated precedence rule.
+4. **`ds-language-server` still declares `aliasChain?: string`** in `src/parsers/tokens.ts`. Dead code — safe to delete.
