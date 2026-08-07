@@ -97,6 +97,23 @@ It does not. That is one team's convention. A team that keeps everything colour-
 
 **Tooling must not assume either direction.** Both are flat labels over one tree.
 
+### One of them is ordered
+
+The sharpest difference between the two is easy to miss, because both render as
+lists of strings:
+
+> **A tier is ordered. A collection is not.**
+
+Nothing about `semantic` describes a job the token does. It describes that it may
+point down and not up. The order *is* the concept — which is why
+`reference-direction` can take `by: "tier"` and mean something, and why a
+collection has no equivalent.
+
+An interface should show this. Declared tiers listed in their declared order,
+with a direction; collections alphabetically, without one. That teaches the
+difference by observation, and it stays mechanism rather than policy: a system
+that declares no order gets no claim about one.
+
 ---
 
 ## The file is derived, not fundamental
@@ -192,9 +209,35 @@ structured systems.
 
 ---
 
-## Open question: `group` is an overloaded word
+## A word means one thing per ecosystem
 
-`$extensions["recipes.designlasagna"].group` is a **human-facing label for documentation** — `"Color"`, `"Layout"` — and has nothing to do with DTCG group nesting. Two different things share the word in the same file:
+Not per file, and not per package. If a term is load-bearing anywhere in Design
+Lasagna, nothing else may take it — even where the second meaning is locally
+obvious from context. Having to disambiguate by context *is* the cost, and it is
+paid on every read, by everyone, forever.
+
+The rule has been applied twice, with opposite outcomes, which is the useful
+part:
+
+- **`group` failed it and was renamed.** DTCG group nesting and a
+  documentation label shared the word inside a single file. It is `label` as of
+  v0.3 — see the last section.
+- **`layer` would fail it, so `tier` stays.** Layers already mean the parts of a
+  design system — tokens, components, utilities, docs, sandbox, language server —
+  which is the sense the project is named for. Taking the word for a token
+  ordering would repeat the `group` mistake knowingly. `tier` is less evocative
+  and it is free.
+
+A rule that only ever returns "rename it" is a preference. This one refuses a
+rename as readily as it demands one.
+
+---
+
+## Settled: `group` the label is now `label`
+
+`$extensions["recipes.designlasagna"].group` was a **human-facing display label**
+— `"Color"`, `"Layout"` — with nothing to do with DTCG group nesting. Two
+different things shared the word inside one file:
 
 ```json
 "color": {                                  ← a DTCG group
