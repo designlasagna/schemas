@@ -1,0 +1,235 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://designlasagna.recipes/v0.3/dtcg-extensions.json",
+  "title": "DTCG Extensions for Design Systems",
+  "description": "Design Lasagna governance metadata carried inside DTCG `$extensions` under the reverse-domain key `recipes.designlasagna`. This is the authoring-side counterpart to v0.3/tokens.json: everything here is human-authored and cannot be derived by a build tool. Resolver output (id, path, resolved, aliasChain) is NOT represented here.",
+
+  "definitions": {
+    "TokenExtensions": {
+      "type": "object",
+      "description": "Value of `$extensions[\"recipes.designlasagna\"]` on a DTCG token.",
+      "additionalProperties": false,
+      "properties": {
+        "tier": {
+          "type": "string",
+          "description": "Token tier. Common values: primitive, semantic, component. Inherited from the nearest ancestor group if omitted.",
+          "examples": ["primitive", "semantic", "component"]
+        },
+        "collection": {
+          "type": "string",
+          "description": "Collection key this token belongs to. Must match a key in the manifest `collections` object. Inheritable."
+        },
+        "type": {
+          "type": "string",
+          "description": "Granular Lasagna type override for preview rendering (RFC B2b). DTCG `$type` stays coarse (e.g. `dimension`); this narrows it (e.g. `borderRadius`). If omitted, the emitter falls back to DTCG `$type`.",
+          "examples": [
+            "color", "dimension", "spacing", "size", "borderRadius", "borderWidth",
+            "fontSize", "lineHeight", "letterSpacing", "fontFamily", "fontWeight",
+            "duration", "cubicBezier", "opacity", "number", "shadow", "border",
+            "gradient", "typography", "transition"
+          ]
+        },
+        "group": {
+          "type": "string",
+          "description": "Human-facing grouping label for docs. Inheritable. Distinct from DTCG group nesting."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category label. Inheritable."
+        },
+        "subCategory": { "type": ["string", "null"] },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Autocomplete sort weight (RFC B14). Higher sorts first. Inheritable."
+        },
+        "since": {
+          "type": "string",
+          "description": "Version or date the token was introduced."
+        },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Semantic search synonyms (RFC B16)."
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "usage": { "$ref": "#/definitions/Usage" },
+        "docs": { "$ref": "#/definitions/Docs" },
+        "a11y": { "$ref": "#/definitions/A11y" },
+        "format": { "$ref": "#/definitions/Format" },
+        "deprecated": { "$ref": "#/definitions/Deprecated" },
+        "platforms": {
+          "type": "object",
+          "description": "Per-platform reference overrides. Omit to let the emitter derive references from the naming transform.",
+          "additionalProperties": { "$ref": "#/definitions/PlatformMapping" }
+        },
+        "relations": {
+          "type": "array",
+          "description": "Relations declared from this token's perspective. The emitter hoists these into the manifest's top-level `tokenRelations` (RFC B7).",
+          "items": { "$ref": "#/definitions/TokenRelationRef" }
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Freeform passthrough, copied verbatim to the manifest token's `metadata`."
+        }
+      }
+    },
+
+    "GroupExtensions": {
+      "type": "object",
+      "description": "Value of `$extensions[\"recipes.designlasagna\"]` on a DTCG group (DTCG 6.3.2). Fields cascade to all descendant tokens unless overridden. Only inheritable fields are permitted here.",
+      "additionalProperties": false,
+      "properties": {
+        "tier": { "type": "string" },
+        "collection": { "type": "string" },
+        "group": { "type": "string" },
+        "category": { "type": "string" },
+        "subCategory": { "type": ["string", "null"] },
+        "type": {
+          "type": "string",
+          "description": "Granular Lasagna type for every descendant. Common case: a `radius` group whose DTCG `$type` is `dimension` but whose Lasagna type is `borderRadius`."
+        },
+        "priority": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "keywords": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "usage": { "$ref": "#/definitions/Usage" },
+        "docs": { "$ref": "#/definitions/Docs" },
+        "a11y": { "$ref": "#/definitions/A11y" },
+        "format": { "$ref": "#/definitions/Format" },
+        "deprecated": {
+          "$ref": "#/definitions/Deprecated",
+          "description": "Deprecates every descendant token. Descendants MAY override with a more specific message."
+        }
+      }
+    },
+
+    "Deprecated": {
+      "type": "object",
+      "required": ["message"],
+      "description": "Lifecycle metadata. DTCG `$deprecated` (5.2.4) only carries true|string, so `removal` and `replacement` must live here. Authors SHOULD also set DTCG `$deprecated` to the same message string for cross-tool interop; on conflict this object wins.",
+      "additionalProperties": false,
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Human-readable reason plus migration guidance."
+        },
+        "removal": {
+          "type": "string",
+          "description": "When it will be removed. ISO date (2026-07-30), semver (3.0.0), or quarter (2026-Q3). ISO dates drive language-server severity escalation."
+        },
+        "replacement": {
+          "type": "string",
+          "description": "Machine-readable replacement token id. MUST resolve to an existing token."
+        }
+      }
+    },
+
+    "Usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowedProperties": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "CSS properties (or platform-equivalent) this token may be applied to."
+        },
+        "context": { "type": "string" },
+        "doNot": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Anti-patterns, surfaced as language-server diagnostics."
+        }
+      }
+    },
+
+    "A11y": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "wcagContrast": {
+          "description": "Either a single ContrastInfo, or a map keyed by condition key (see docs/condition-keys.md) when contrast differs per mode. Resolves RFC open question 6. Emitters SHOULD compute this rather than require authoring.",
+          "oneOf": [
+            { "$ref": "#/definitions/ContrastInfo" },
+            {
+              "type": "object",
+              "additionalProperties": { "$ref": "#/definitions/ContrastInfo" }
+            }
+          ]
+        },
+        "minTargetSize": { "type": "string" },
+        "motionSafe": { "type": "boolean" }
+      }
+    },
+
+    "ContrastInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ratio": { "type": "number" },
+        "against": {
+          "type": "string",
+          "description": "Token id this ratio was measured against."
+        },
+        "level": {
+          "type": "string",
+          "examples": ["AA", "AAA", "AA-large", "fail"]
+        }
+      }
+    },
+
+    "Docs": {
+      "type": "object",
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "figma": { "type": "string", "format": "uri" },
+        "storybook": { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": { "type": "string", "format": "uri" }
+    },
+
+    "Format": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "colorSpace": {
+          "type": "string",
+          "description": "Preferred output color space. Distinct from DTCG `$value.colorSpace`, which describes the authored value."
+        },
+        "unit": { "type": "string" }
+      }
+    },
+
+    "PlatformMapping": {
+      "type": "object",
+      "required": ["reference"],
+      "additionalProperties": true,
+      "properties": {
+        "reference": { "type": "string" },
+        "usage": { "type": "string" }
+      }
+    },
+
+    "TokenRelationRef": {
+      "type": "object",
+      "required": ["type", "tokens"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "examples": ["pairs-with", "contrast-pair", "scale-sibling", "replaces"]
+        },
+        "tokens": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Other token ids in the relation. The declaring token is implicit and is prepended by the emitter."
+        },
+        "description": { "type": "string" }
+      }
+    }
+  }
+}

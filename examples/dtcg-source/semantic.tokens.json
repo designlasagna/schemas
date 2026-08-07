@@ -1,0 +1,81 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Mode-invariant semantic tokens. Colors live in theme.*.tokens.json.",
+
+  "radius": {
+    "$type": "dimension",
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "semantic",
+        "collection": "theme",
+        "group": "Border",
+        "category": "radius",
+        "type": "borderRadius",
+        "priority": 60
+      }
+    },
+    "sm": {
+      "$value": "{dimension.2}",
+      "$description": "Small border radius."
+    }
+  },
+
+  "space": {
+    "$type": "dimension",
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "semantic",
+        "collection": "theme",
+        "group": "Layout",
+        "category": "spacing",
+        "type": "spacing",
+        "priority": 70,
+        "usage": {
+          "allowedProperties": ["margin", "padding", "gap"],
+          "doNot": ["Do not use spacing tokens for border-width."]
+        }
+      }
+    },
+    "md": {
+      "$value": "{dimension.16}",
+      "$description": "Medium spacing step.",
+      "$extensions": {
+        "recipes.designlasagna": { "keywords": ["gutter", "gap"] }
+      }
+    },
+    "lg": {
+      "$value": "{dimension.32}",
+      "$description": "Large spacing step."
+    }
+  },
+
+  "typography": {
+    "$type": "typography",
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "semantic",
+        "collection": "theme",
+        "group": "Typography",
+        "category": "style",
+        "priority": 65
+      }
+    },
+    "heading-1": {
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": { "value": 32, "unit": "px" },
+        "fontWeight": "{font.weight.bold}",
+        "letterSpacing": { "value": -0.5, "unit": "px" },
+        "lineHeight": 1.25
+      },
+      "$description": "Page-level heading.",
+      "$extensions": {
+        "recipes.designlasagna": {
+          "docs": {
+            "storybook": "https://example.com/storybook/?path=/docs/typography--heading-1"
+          }
+        }
+      }
+    }
+  }
+}

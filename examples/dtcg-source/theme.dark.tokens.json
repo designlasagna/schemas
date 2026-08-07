@@ -1,0 +1,15 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Dark theme colors. Non-default mode file: values only. Governance metadata is inherited from theme.light.tokens.json.",
+
+  "color": {
+    "$type": "color",
+    "bg": {
+      "primary": { "$value": "{color.blue.300}" },
+      "legacy": { "$value": "{color.blue.500}" }
+    },
+    "text": {
+      "on-primary": { "$value": "{color.neutral.900}" }
+    }
+  }
+}
