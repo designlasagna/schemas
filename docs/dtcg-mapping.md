@@ -29,7 +29,7 @@ DTCG cannot express three things Lasagna needs. Everything below follows from th
 | `id` | DTCG path joined with `.` | `color.bg.primary` |
 | `path` | DTCG path segments | |
 | `description` | `$description` | |
-| `type` | `$extensions[NS].type` → else `$type` | Granular wins |
+| `type` | `$extensions[NS].type` → else `$type` → else target's `$type` | Granular wins; inherited through whole-token references |
 | `modes` | `$value` per mode file | Authored form, aliases intact — **the only alias source** |
 | `resolved` | resolved `$value` per mode | See serialization below. MUST be fully resolved |
 | `sourceFiles` | files the token appeared in | |
@@ -98,6 +98,24 @@ Emitters MUST keep `modes` whenever a token references another token, including 
 
 Building a transitive dependency graph means walking `modes` across tokens — a few lines in `token-core`, done once, rather than a precomputed field that was wrong for multi-mode tokens.
 
+### R9 — Both reference syntaxes, with different reach
+DTCG 7.5.1 requires tools to support both. They are not interchangeable:
+
+| | Curly brace `{a.b}` | JSON Pointer `$ref` |
+|---|---|---|
+| Targets | whole tokens only | any document location |
+| Implicit path | appends `/$value` | explicit, full path |
+| **Reach** | **any file in the project** | **its own file only** |
+
+Curly-brace aliases resolve against the merged token namespace, so they cross mode files freely. JSON Pointers are document-scoped — `#/` is the root of the file the reference was authored in, and DTCG defines no cross-document pointer form. A pointer aimed at another file raises `unresolved-pointer`.
+
+This is a feature for file-per-mode: `theme.light` and `theme.dark` can carry a byte-identical `{ "$ref": "#/palette/seed" }` and each resolves to its own seed. See `color.accent` in `examples/dtcg-pointers/`.
+
+A token-level `$ref` replaces `$value` entirely, so such a node is a **token, not a group**, and inherits `$type` from its target when it declares none.
+
+### R10 — Platform references are sanitized
+DTCG permits token names that are illegal in a CSS custom property — a group named `ui/legacy` yields `--ds-ui/legacy-accent`. Characters outside `[A-Za-z0-9_-]` are replaced with `-` and a `sanitized-platform-reference` warning is raised. Sanitization can in principle collide; the warning is what surfaces it.
+
 ## Schema changes this work required
 
 **`ContrastInfo` in `v0.3/tokens.json` — added `required: ["ratio"]` and `additionalProperties: false`.**
@@ -109,7 +127,16 @@ The `A11y.wcagContrast` `oneOf` was unsatisfiable for the map form. `ContrastInf
 ## Open items
 
 1. **No schema for `ds.config.json`.** It is a new artifact carrying `designSystem`, `conditions`, `collections`, `source.files` and platform naming. Needs `v0.3/build-config.json`.
-2. **Multi-dimension conditions are unexercised.** The example uses one dimension. Add a brand × colorScheme fixture to prove the `dimension:value` key grammar end to end.
+2. **Multi-dimension conditions are unexercised.** Both fixtures use one dimension. Add a brand × colorScheme fixture to prove the `dimension:value` key grammar end to end.
 3. **`$deprecated` on a DTCG group** deprecates all descendants; interaction with token-level overrides needs a stated precedence rule.
 4. **`ds-language-server` still declares `aliasChain?: string`** in `src/parsers/tokens.ts`. Dead code — safe to delete.
-5. **JSON Pointer references are not represented in the fixtures.** `token-core` implements DTCG 7.1.2 `$ref` (both whole-token and property-level), but `examples/dtcg-source/` only exercises curly-brace aliases. A fixture covering `$ref` would pin the manifest shape for pointer-based sources.
+5. **`$extends` (DTCG 6.4) is not implemented.** Groups may inherit from other groups with JSON Schema `$ref` deep-merge semantics, including override and circular-reference rules. No fixture covers it and `token-core` ignores it, so a source file using `$extends` currently loses the inherited tokens silently — the same failure mode that token-level `$ref` had.
+
+## Fixture projects
+
+| Project | Covers |
+|---|---|
+| `examples/dtcg-source` → `examples/expected/tokens.json` | curly-brace aliases, two modes, group cascade, composite values, deprecation with removal date, foreign `$extensions`, computed per-mode contrast |
+| `examples/dtcg-pointers` → `examples/expected/pointers.tokens.json` | JSON Pointer references: whole-token, colour component, dimension value/unit, typography sub-properties, chaining onto curly-brace, and per-document resolution across mode files |
+
+Both are validated by `test/validate.mjs` and reproduced byte for byte by `@designlasagna/token-core`.

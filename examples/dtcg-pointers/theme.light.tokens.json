@@ -1,0 +1,34 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Light theme. `color.accent` points at `palette.seed` in THIS document — the dark file has its own seed, which is what makes pointer resolution document-scoped rather than global.",
+
+  "palette": {
+    "$type": "color",
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "primitive",
+        "collection": "theme",
+        "group": "Palette"
+      }
+    },
+    "seed": {
+      "$value": { "colorSpace": "srgb", "components": [0, 0.259, 0.478], "hex": "#00427a" },
+      "$description": "Per-mode seed colour."
+    }
+  },
+
+  "color": {
+    "$type": "color",
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "semantic",
+        "collection": "theme",
+        "group": "Color"
+      }
+    },
+    "accent": {
+      "$value": { "$ref": "#/palette/seed" },
+      "$description": "Resolves against the seed declared in the same mode file."
+    }
+  }
+}
