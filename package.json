@@ -29,11 +29,14 @@
     "./v0.3/utilities.json": "./v0.3/utilities.json",
     "./v0.3/icons.json": "./v0.3/icons.json",
     "./v0.3/cem-extensions.json": "./v0.3/cem-extensions.json",
-    "./v0.3/dtcg-extensions.json": "./v0.3/dtcg-extensions.json"
+    "./v0.3/dtcg-extensions.json": "./v0.3/dtcg-extensions.json",
+    "./examples/*": "./examples/*",
+    "./package.json": "./package.json"
   },
   "files": [
     "v0.2/",
-    "v0.3/"
+    "v0.3/",
+    "examples/"
   ],
   "devDependencies": {
     "ajv": "^8.20.0",
