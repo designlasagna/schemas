@@ -51,11 +51,12 @@
         "keywords": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Semantic search synonyms (RFC B16)."
+          "description": "Semantic search synonyms (RFC B16). Other words someone might search for — \"navy\" finding a blue. For search only; nothing selects on them."
         },
         "tags": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": { "type": "string" },
+          "description": "Arbitrary classification labels. Unlike `keywords`, these are selectable: a lint rule can target `{ \"tag\": [\"off-limits\"] }`. Meaning is the project's, not the schema's."
         },
         "usage": { "$ref": "#/definitions/Usage" },
         "docs": { "$ref": "#/definitions/Docs" },
