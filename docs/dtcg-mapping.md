@@ -20,8 +20,16 @@ DTCG cannot express three things Lasagna needs. Everything below follows from th
 | # | Gap | Resolution |
 |---|-----|-----------|
 | 1 | `$deprecated` (5.2.4) is only `true \| string`. No removal date, no machine-readable replacement. | `deprecated {message, removal, replacement}` in `$extensions`. Mirror the message into `$deprecated` for cross-tool interop. |
-| 2 | **No modes / themes / conditions concept at all.** | File-per-mode, declared in `ds.config.json`. Every source file stays 100% valid DTCG. |
+| 2 | The **Format module** has no modes / themes / conditions concept. ⚠️ **The [Resolver module](https://www.w3.org/community/reports/design-tokens/CG-FINAL-resolver-20251028/) does** — `sets`, `modifiers`, `contexts`, `resolutionOrder`. | Currently: file-per-mode, declared in `ds.config.json`. Every source file stays 100% valid DTCG. **Under review against the Resolver module.** |
 | 3 | `$type` is coarse — `dimension` covers radius, spacing, font-size, border-width. | Granular `type` in `$extensions`; `$type` stays DTCG-valid. |
+
+> **Gap 2 is under review.** It was written against the Format module and read as covering the whole specification. DTCG ships three modules — Format, Color and **Resolver** — and the Resolver standardises exactly this, including §2.1 Orthogonality and §2.2 Permutation, which is what [`condition-keys.md`](./condition-keys.md) describes independently.
+>
+> Whether `ds.config.json` keeps its own mode model, reads a `tokens.resolver.json`, or is replaced by one is not yet decided. What is decided is that the row above may no longer claim the concept is absent.
+>
+> The same lesson as `$ref`, `$extends` and their cycle rules: **check adjacent sections — and this time, adjacent modules.**
+
+There is no platform or output module, and none is planned; platform naming and file emission are tool concerns. See [`boundaries.md`](./boundaries.md).
 
 ## Field mapping
 
