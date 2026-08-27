@@ -19,6 +19,7 @@
     "multi-platform"
   ],
   "scripts": {
+    "validate": "node scripts/validate-schemas.mjs",
     "test": "node test/validate.mjs"
   },
   "exports": {

@@ -13,6 +13,11 @@ Used by the [Design Lasagna Language Server](https://github.com/designlasagna/ds
 | `v0.2/tokens.json` | Design token manifest (resolved values, modes, multi-platform references, deprecation) |
 | `v0.2/utilities.json` | Utility/style preset manifest (categorized, multi-platform, with deprecation) |
 | `v0.2/cem-extensions.json` | Extensions to Custom Elements Manifest for lifecycle management |
+| `v0.3/tokens.json` | Current Design Lasagna token manifest schema |
+| `v0.3/utilities.json` | Current utility/style preset manifest schema |
+| `v0.3/cem-extensions.json` | Current CEM lifecycle extension schema |
+| `v0.3/dtcg-extensions.json` | `recipes.designlasagna` metadata for DTCG source files |
+| `v0.3/icons.json` | Current icon manifest schema |
 
 ## Usage
 
@@ -20,8 +25,8 @@ Used by the [Design Lasagna Language Server](https://github.com/designlasagna/ds
 
 ```json
 {
-  "$schema": "https://designlasagna.recipes/v0.2/tokens.json",
-  "schemaVersion": "0.2.0",
+  "$schema": "https://designlasagna.recipes/v0.3/tokens.json",
+  "schemaVersion": "0.3.0",
   "tokens": [...]
 }
 ```
@@ -30,14 +35,32 @@ Used by the [Design Lasagna Language Server](https://github.com/designlasagna/ds
 
 ```bash
 npm install @designlasagna/schemas ajv-cli
-ajv validate -s node_modules/@designlasagna/schemas/v0.2/tokens.json -d dist/tokens.json
+ajv validate -s node_modules/@designlasagna/schemas/v0.3/tokens.json -d dist/tokens.json
 ```
 
 ### Programmatic
 
 ```js
-import tokenSchema from '@designlasagna/schemas/v0.2/tokens.json' assert { type: 'json' };
-import utilitySchema from '@designlasagna/schemas/v0.2/utilities.json' assert { type: 'json' };
+import tokenSchema from '@designlasagna/schemas/v0.3/tokens.json' assert { type: 'json' };
+import utilitySchema from '@designlasagna/schemas/v0.3/utilities.json' assert { type: 'json' };
+```
+
+## DTCG extensions
+
+Token source remains standard DTCG. Design Lasagna-specific governance metadata
+belongs in `$extensions["recipes.designlasagna"]` and is validated by
+`v0.3/dtcg-extensions.json`. The schema distinguishes group-level fields from
+token-only fields such as `since`, `platforms`, `relations`, and `metadata`.
+
+```json
+{
+  "$extensions": {
+    "recipes.designlasagna": {
+      "tier": "semantic",
+      "usage": { "allowedProperties": ["background-color"] }
+    }
+  }
+}
 ```
 
 ## Multi-Platform Support
@@ -121,6 +144,20 @@ The Language Server uses `removal` dates to escalate diagnostic severity:
 | 30–90 days away | ⚠️ Warning |
 | < 30 days away | 🔴 Error |
 | Past due | 🔴 Error |
+
+## Releases
+
+The current schema line is v0.3. Pin consumers to a release tag (for example,
+`v0.3.0`) when installing from Git, or use the corresponding published `0.3.x`
+npm version. The package retains the v0.2 schema exports for existing consumers.
+
+Validate the checked-out v0.3 schemas with:
+
+```bash
+npm ci
+npm run validate
+npm test
+```
 
 ## License
 
