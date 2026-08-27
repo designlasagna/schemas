@@ -1,6 +1,6 @@
 {
   "name": "@designlasagna/schemas",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "JSON schemas for design system manifests — tokens, utilities, icons, CEM extensions, and DTCG authoring extensions. Multi-platform.",
   "license": "MIT",
   "repository": {
