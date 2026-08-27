@@ -1,0 +1,487 @@
+{
+  "$schema": "https://designlasagna.recipes/v0.3/tokens.json",
+  "schemaVersion": "0.3.0",
+  "generatedAt": "2026-01-15T10:00:00.000Z",
+  "designSystem": {
+    "name": "Pointer Example",
+    "version": "0.1.0"
+  },
+  "source": {
+    "files": [
+      {
+        "file": "primitives.tokens.json",
+        "mode": "base"
+      },
+      {
+        "file": "theme.light.tokens.json",
+        "mode": "light"
+      },
+      {
+        "file": "theme.dark.tokens.json",
+        "mode": "dark"
+      }
+    ]
+  },
+  "conditions": {
+    "colorScheme": {
+      "type": "colorScheme",
+      "values": [
+        "light",
+        "dark"
+      ],
+      "default": "light"
+    }
+  },
+  "collections": {
+    "palette": {
+      "name": "Palette",
+      "defaults": {
+        "tier": "primitive"
+      }
+    },
+    "derived": {
+      "name": "Derived",
+      "description": "Tokens built from property-level references into the palette.",
+      "defaults": {
+        "tier": "semantic"
+      }
+    },
+    "theme": {
+      "name": "Theme",
+      "conditions": [
+        "colorScheme"
+      ],
+      "defaults": {
+        "tier": "semantic"
+      }
+    }
+  },
+  "counts": {
+    "total": 11,
+    "by": {
+      "tier": {
+        "primitive": 4,
+        "semantic": 7
+      },
+      "collection": {
+        "derived": 6,
+        "palette": 3,
+        "theme": 2
+      },
+      "type": {
+        "color": 5,
+        "dimension": 3,
+        "number": 1,
+        "typography": 2
+      }
+    }
+  },
+  "tokens": [
+    {
+      "id": "base.blue",
+      "path": [
+        "base",
+        "blue"
+      ],
+      "label": "Base",
+      "collection": "palette",
+      "tier": "primitive",
+      "type": "color",
+      "description": "Seed colour for the derived ramp.",
+      "format": {
+        "colorSpace": "srgb"
+      },
+      "platforms": {
+        "web": {
+          "reference": "--dlp-base-blue",
+          "usage": "var(--dlp-base-blue)"
+        }
+      },
+      "resolved": {
+        "base": "#3366e6"
+      },
+      "modes": {
+        "base": {
+          "colorSpace": "srgb",
+          "components": [
+            0.2,
+            0.4,
+            0.9
+          ],
+          "hex": "#3366e6"
+        }
+      },
+      "sourceFiles": [
+        "primitives.tokens.json"
+      ]
+    },
+    {
+      "id": "base.spacing",
+      "path": [
+        "base",
+        "spacing"
+      ],
+      "label": "Base",
+      "collection": "palette",
+      "tier": "primitive",
+      "type": "dimension",
+      "description": "Base spacing step.",
+      "format": {
+        "unit": "px"
+      },
+      "platforms": {
+        "web": {
+          "reference": "--dlp-base-spacing",
+          "usage": "var(--dlp-base-spacing)"
+        }
+      },
+      "resolved": {
+        "base": "16px"
+      },
+      "modes": {
+        "base": {
+          "value": 16,
+          "unit": "px"
+        }
+      },
+      "sourceFiles": [
+        "primitives.tokens.json"
+      ]
+    },
+    {
+      "id": "base.text",
+      "path": [
+        "base",
+        "text"
+      ],
+      "label": "Base",
+      "collection": "palette",
+      "tier": "primitive",
+      "type": "typography",
+      "description": "Body text style.",
+      "platforms": {
+        "web": {
+          "reference": "--dlp-base-text",
+          "usage": "var(--dlp-base-text)"
+        }
+      },
+      "resolved": {
+        "base": {
+          "fontFamily": "Helvetica, Arial, sans-serif",
+          "fontSize": "16px",
+          "fontWeight": 400,
+          "lineHeight": 1.5
+        }
+      },
+      "modes": {
+        "base": {
+          "fontFamily": [
+            "Helvetica",
+            "Arial",
+            "sans-serif"
+          ],
+          "fontSize": {
+            "value": 16,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "lineHeight": 1.5
+        }
+      },
+      "sourceFiles": [
+        "primitives.tokens.json"
+      ]
+    },
+    {
+      "id": "derived.primary",
+      "path": [
+        "derived",
+        "primary"
+      ],
+      "label": "Derived",
+      "collection": "derived",
+      "tier": "semantic",
+      "type": "color",
+      "description": "Whole-token pointer. Has no $value, and inherits $type from the target.",
+      "format": {
+        "colorSpace": "srgb"
+      },
+      "platforms": {
+        "web": {
+          "reference": "--dlp-derived-primary",
+          "usage": "var(--dlp-derived-primary)"
+        }
+      },
+      "resolved": {
+        "base": "#3366e6"
+      },
+      "modes": {
+        "base": {
+          "$ref": "#/base/blue"
+        }
+      },
+      "sourceFiles": [
+        "primitives.tokens.json"
+      ]
+    },
+    {
+      "id": "derived.primary-hue",
+      "path": [
+        "derived",
+        "primary-hue"
+      ],
+      "label": "Derived",
+      "collection": "derived",
+      "tier": "semantic",
+      "type": "number",
+      "description": "Property-level pointer into a colour component (DTCG 7.3.1).",
+      "platforms": {
+        "web": {
+          "reference": "--dlp-derived-primary-hue",
+          "usage": "var(--dlp-derived-primary-hue)"
+        }
+      },
+      "resolved": {
+        "base": 0.2
+      },
+      "modes": {
+        "base": {
+          "$ref": "#/base/blue/$value/components/0"
+        }
+      },
+      "sourceFiles": [
+        "primitives.tokens.json"
+      ]
+    },
+    {
+      "id": "derived.small",
+      "path": [
+        "derived",
+        "small"
+      ],
+      "label": "Derived",
+      "collection": "derived",
+      "tier": "semantic",
+      "type": "dimension",
+      "description": "Borrows the numeric value, keeps its own unit (DTCG 7.3.2).",
+      "format": {
+        "unit": "rem"
+      },
+      "platforms": {
+        "web": {
+          "reference": "--dlp-derived-small",
+          "usage": "var(--dlp-derived-small)"
+        }
+      },
+      "resolved": {
+        "base": "16rem"
+      },
+      "modes": {
+        "base": {
+          "value": {
+            "$ref": "#/base/spacing/$value/value"
+          },
+          "unit": "rem"
+        }
+      },
+      "sourceFiles": [
+        "primitives.tokens.json"
+      ]
+    },
+    {
+      "id": "derived.large",
+      "path": [
+        "derived",
+        "large"
+      ],
+      "label": "Derived",
+      "collection": "derived",
+      "tier": "semantic",
+      "type": "dimension",
+      "description": "Borrows the unit, keeps its own numeric value (DTCG 7.3.2).",
+      "format": {
+        "unit": "px"
+      },
+      "platforms": {
+        "web": {
+          "reference": "--dlp-derived-large",
+          "usage": "var(--dlp-derived-large)"
+        }
+      },
+      "resolved": {
+        "base": "32px"
+      },
+      "modes": {
+        "base": {
+          "value": 32,
+          "unit": {
+            "$ref": "#/base/spacing/$value/unit"
+          }
+        }
+      },
+      "sourceFiles": [
+        "primitives.tokens.json"
+      ]
+    },
+    {
+      "id": "derived.heading",
+      "path": [
+        "derived",
+        "heading"
+      ],
+      "label": "Derived",
+      "collection": "derived",
+      "tier": "semantic",
+      "type": "typography",
+      "description": "Inherits fontFamily and lineHeight from base.text (DTCG 7.3.3).",
+      "platforms": {
+        "web": {
+          "reference": "--dlp-derived-heading",
+          "usage": "var(--dlp-derived-heading)"
+        }
+      },
+      "resolved": {
+        "base": {
+          "fontFamily": "Helvetica, Arial, sans-serif",
+          "fontSize": "32px",
+          "fontWeight": 700,
+          "lineHeight": 1.5
+        }
+      },
+      "modes": {
+        "base": {
+          "fontFamily": {
+            "$ref": "#/base/text/$value/fontFamily"
+          },
+          "fontSize": {
+            "value": 32,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "lineHeight": {
+            "$ref": "#/base/text/$value/lineHeight"
+          }
+        }
+      },
+      "sourceFiles": [
+        "primitives.tokens.json"
+      ]
+    },
+    {
+      "id": "derived.chained",
+      "path": [
+        "derived",
+        "chained"
+      ],
+      "label": "Derived",
+      "collection": "derived",
+      "tier": "semantic",
+      "type": "color",
+      "description": "Curly-brace alias onto a $ref token — the two syntaxes chain.",
+      "format": {
+        "colorSpace": "srgb"
+      },
+      "platforms": {
+        "web": {
+          "reference": "--dlp-derived-chained",
+          "usage": "var(--dlp-derived-chained)"
+        }
+      },
+      "resolved": {
+        "base": "#3366e6"
+      },
+      "modes": {
+        "base": "{derived.primary}"
+      },
+      "sourceFiles": [
+        "primitives.tokens.json"
+      ]
+    },
+    {
+      "id": "palette.seed",
+      "path": [
+        "palette",
+        "seed"
+      ],
+      "label": "Palette",
+      "collection": "theme",
+      "tier": "primitive",
+      "type": "color",
+      "description": "Per-mode seed colour.",
+      "format": {
+        "colorSpace": "srgb"
+      },
+      "platforms": {
+        "web": {
+          "reference": "--dlp-palette-seed",
+          "usage": "var(--dlp-palette-seed)"
+        }
+      },
+      "resolved": {
+        "light": "#00427a",
+        "dark": "#52a8e1"
+      },
+      "modes": {
+        "light": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0.259,
+            0.478
+          ],
+          "hex": "#00427a"
+        },
+        "dark": {
+          "colorSpace": "srgb",
+          "components": [
+            0.322,
+            0.659,
+            0.882
+          ],
+          "hex": "#52a8e1"
+        }
+      },
+      "sourceFiles": [
+        "theme.light.tokens.json",
+        "theme.dark.tokens.json"
+      ]
+    },
+    {
+      "id": "color.accent",
+      "path": [
+        "color",
+        "accent"
+      ],
+      "label": "Color",
+      "collection": "theme",
+      "tier": "semantic",
+      "type": "color",
+      "description": "Resolves against the seed declared in the same mode file.",
+      "format": {
+        "colorSpace": "srgb"
+      },
+      "platforms": {
+        "web": {
+          "reference": "--dlp-color-accent",
+          "usage": "var(--dlp-color-accent)"
+        }
+      },
+      "resolved": {
+        "light": "#00427a",
+        "dark": "#52a8e1"
+      },
+      "modes": {
+        "light": {
+          "$ref": "#/palette/seed"
+        },
+        "dark": {
+          "$ref": "#/palette/seed"
+        }
+      },
+      "sourceFiles": [
+        "theme.light.tokens.json",
+        "theme.dark.tokens.json"
+      ]
+    }
+  ]
+}

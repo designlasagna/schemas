@@ -1,0 +1,84 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "JSON Pointer references (DTCG 7.1.2, 7.3). Pointers are document-scoped, so every target below lives in this same file.",
+
+  "base": {
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "primitive",
+        "collection": "palette",
+        "label": "Base"
+      }
+    },
+    "blue": {
+      "$type": "color",
+      "$value": { "colorSpace": "srgb", "components": [0.2, 0.4, 0.9], "hex": "#3366e6" },
+      "$description": "Seed colour for the derived ramp."
+    },
+    "spacing": {
+      "$type": "dimension",
+      "$value": { "value": 16, "unit": "px" },
+      "$description": "Base spacing step."
+    },
+    "text": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": ["Helvetica", "Arial", "sans-serif"],
+        "fontSize": { "value": 16, "unit": "px" },
+        "fontWeight": 400,
+        "lineHeight": 1.5
+      },
+      "$description": "Body text style."
+    }
+  },
+
+  "derived": {
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "semantic",
+        "collection": "derived",
+        "label": "Derived"
+      }
+    },
+
+    "primary": {
+      "$ref": "#/base/blue",
+      "$description": "Whole-token pointer. Has no $value, and inherits $type from the target."
+    },
+
+    "primary-hue": {
+      "$type": "number",
+      "$value": { "$ref": "#/base/blue/$value/components/0" },
+      "$description": "Property-level pointer into a colour component (DTCG 7.3.1)."
+    },
+
+    "small": {
+      "$type": "dimension",
+      "$value": { "value": { "$ref": "#/base/spacing/$value/value" }, "unit": "rem" },
+      "$description": "Borrows the numeric value, keeps its own unit (DTCG 7.3.2)."
+    },
+
+    "large": {
+      "$type": "dimension",
+      "$value": { "value": 32, "unit": { "$ref": "#/base/spacing/$value/unit" } },
+      "$description": "Borrows the unit, keeps its own numeric value (DTCG 7.3.2)."
+    },
+
+    "heading": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": { "$ref": "#/base/text/$value/fontFamily" },
+        "fontSize": { "value": 32, "unit": "px" },
+        "fontWeight": 700,
+        "lineHeight": { "$ref": "#/base/text/$value/lineHeight" }
+      },
+      "$description": "Inherits fontFamily and lineHeight from base.text (DTCG 7.3.3)."
+    },
+
+    "chained": {
+      "$type": "color",
+      "$value": "{derived.primary}",
+      "$description": "Curly-brace alias onto a $ref token — the two syntaxes chain."
+    }
+  }
+}

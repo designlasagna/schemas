@@ -1,0 +1,18 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Dark theme. Values only (R3). The pointer is byte-identical to the light file, yet must resolve to this file's seed.",
+
+  "palette": {
+    "$type": "color",
+    "seed": {
+      "$value": { "colorSpace": "srgb", "components": [0.322, 0.659, 0.882], "hex": "#52a8e1" }
+    }
+  },
+
+  "color": {
+    "$type": "color",
+    "accent": {
+      "$value": { "$ref": "#/palette/seed" }
+    }
+  }
+}

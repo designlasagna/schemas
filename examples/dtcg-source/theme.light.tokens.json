@@ -1,0 +1,76 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Light theme colors. This is the DEFAULT mode file, so it carries the governance metadata for these tokens. Non-default mode files (theme.dark) carry values only.",
+
+  "color": {
+    "$type": "color",
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "semantic",
+        "collection": "theme",
+        "label": "Color",
+        "category": "semantic",
+        "priority": 90
+      }
+    },
+    "bg": {
+      "primary": {
+        "$value": "{color.blue.500}",
+        "$description": "Primary surface background.",
+        "$extensions": {
+          "recipes.designlasagna": {
+            "keywords": ["surface", "backdrop"],
+            "usage": {
+              "allowedProperties": ["background-color"],
+              "doNot": ["Do not use for text — use color.text.* instead."]
+            },
+            "docs": {
+              "figma": "https://figma.com/file/abc/Tokens?node-id=1-2",
+              "storybook": "https://example.com/storybook/?path=/docs/color--backgrounds"
+            },
+            "platforms": {
+              "ios": { "reference": "DsTokens.color.bgPrimary", "usage": "Color.dsBgPrimary" }
+            },
+            "relations": [
+              {
+                "type": "contrast-pair",
+                "tokens": ["color.text.on-primary"],
+                "description": "Guaranteed accessible foreground for this background."
+              }
+            ],
+            "since": "1.0.0"
+          }
+        }
+      },
+      "legacy": {
+        "$value": "{color.blue.300}",
+        "$description": "Legacy accent background.",
+        "$deprecated": "Use color.bg.primary instead.",
+        "$extensions": {
+          "recipes.designlasagna": {
+            "deprecated": {
+              "message": "Use color.bg.primary instead.",
+              "removal": "2026-07-30",
+              "replacement": "color.bg.primary"
+            },
+            "since": "0.4.0"
+          }
+        }
+      }
+    },
+    "text": {
+      "on-primary": {
+        "$value": "{color.neutral.0}",
+        "$description": "Foreground for use on color.bg.primary.",
+        "$extensions": {
+          "recipes.designlasagna": {
+            "usage": { "allowedProperties": ["color"] },
+            "platforms": {
+              "ios": { "reference": "DsTokens.color.textOnPrimary" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

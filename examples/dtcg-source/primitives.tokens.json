@@ -1,0 +1,87 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "color": {
+    "$type": "color",
+    "$description": "Raw palette. Never reference these directly in product code.",
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "primitive",
+        "collection": "palette",
+        "label": "Color",
+        "category": "palette",
+        "priority": 10,
+        "usage": {
+          "doNot": ["Do not use primitives directly in components — use a semantic token."]
+        }
+      }
+    },
+    "blue": {
+      "500": {
+        "$value": { "colorSpace": "srgb", "components": [0, 0.259, 0.478], "hex": "#00427a" },
+        "$description": "Brand blue, primary ramp step.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:19211:71",
+            "variableSetName": "Primitives"
+          },
+          "recipes.designlasagna": {
+            "keywords": ["brand", "navy"]
+          }
+        }
+      },
+      "300": {
+        "$value": { "colorSpace": "srgb", "components": [0.322, 0.659, 0.882], "hex": "#52a8e1" },
+        "$description": "Brand blue, light ramp step."
+      }
+    },
+    "neutral": {
+      "0": {
+        "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" },
+        "$description": "Pure white."
+      },
+      "900": {
+        "$value": { "colorSpace": "srgb", "components": [0.059, 0.078, 0.098], "hex": "#0f1419" },
+        "$description": "Near-black."
+      }
+    }
+  },
+
+  "dimension": {
+    "$type": "dimension",
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "primitive",
+        "collection": "palette",
+        "label": "Dimension",
+        "category": "scale",
+        "priority": 10
+      }
+    },
+    "2": { "$value": { "value": 2, "unit": "px" } },
+    "16": { "$value": { "value": 16, "unit": "px" } },
+    "32": { "$value": { "value": 32, "unit": "px" } }
+  },
+
+  "font": {
+    "$extensions": {
+      "recipes.designlasagna": {
+        "tier": "primitive",
+        "collection": "palette",
+        "label": "Typography",
+        "priority": 10
+      }
+    },
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": ["Inter", "Helvetica", "sans-serif"]
+      }
+    },
+    "weight": {
+      "bold": {
+        "$type": "fontWeight",
+        "$value": 700
+      }
+    }
+  }
+}

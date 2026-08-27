@@ -1,0 +1,51 @@
+{
+  "$comment": "Build config for the DTCG -> Design Lasagna resolver. NOTE: no schema covers this file yet — see docs/dtcg-mapping.md 'Open items'. Modes are declared here because DTCG has no modes concept, which keeps every .tokens.json file 100% valid DTCG.",
+
+  "designSystem": {
+    "name": "Example DS",
+    "version": "1.2.0",
+    "documentation": "https://example.com/design-system",
+    "package": "@example/design-system"
+  },
+
+  "conditions": {
+    "colorScheme": {
+      "type": "colorScheme",
+      "description": "Light and dark appearance.",
+      "values": ["light", "dark"],
+      "default": "light"
+    }
+  },
+
+  "collections": {
+    "palette": {
+      "name": "Palette",
+      "description": "Raw primitives. Not mode-dependent.",
+      "defaults": { "tier": "primitive", "priority": 10 }
+    },
+    "theme": {
+      "name": "Theme",
+      "description": "Semantic tokens consumed by product code.",
+      "conditions": ["colorScheme"],
+      "defaults": { "tier": "semantic", "priority": 60 }
+    }
+  },
+
+  "source": {
+    "files": [
+      { "file": "primitives.tokens.json", "mode": "base" },
+      { "file": "semantic.tokens.json", "mode": "base" },
+      { "file": "theme.light.tokens.json", "mode": "light" },
+      { "file": "theme.dark.tokens.json", "mode": "dark" }
+    ]
+  },
+
+  "platforms": {
+    "web": {
+      "prefix": "ds",
+      "format": "css-custom-property"
+    }
+  },
+
+  "output": "../expected/tokens.json"
+}

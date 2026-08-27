@@ -1,0 +1,47 @@
+{
+  "$comment": "Second fixture project, covering DTCG 7.1.2 JSON Pointer references. The main examples/dtcg-source project covers curly-brace aliases only.",
+
+  "designSystem": {
+    "name": "Pointer Example",
+    "version": "0.1.0"
+  },
+
+  "conditions": {
+    "colorScheme": {
+      "type": "colorScheme",
+      "values": ["light", "dark"],
+      "default": "light"
+    }
+  },
+
+  "collections": {
+    "palette": {
+      "name": "Palette",
+      "defaults": { "tier": "primitive" }
+    },
+    "derived": {
+      "name": "Derived",
+      "description": "Tokens built from property-level references into the palette.",
+      "defaults": { "tier": "semantic" }
+    },
+    "theme": {
+      "name": "Theme",
+      "conditions": ["colorScheme"],
+      "defaults": { "tier": "semantic" }
+    }
+  },
+
+  "source": {
+    "files": [
+      { "file": "primitives.tokens.json", "mode": "base" },
+      { "file": "theme.light.tokens.json", "mode": "light" },
+      { "file": "theme.dark.tokens.json", "mode": "dark" }
+    ]
+  },
+
+  "platforms": {
+    "web": { "prefix": "dlp" }
+  },
+
+  "output": "../expected/pointers.tokens.json"
+}

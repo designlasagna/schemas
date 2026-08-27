@@ -1,7 +1,7 @@
 {
   "name": "@designlasagna/schemas",
-  "version": "0.2.0",
-  "description": "JSON schemas for design system manifests — tokens, utilities, and CEM extensions. Multi-platform.",
+  "version": "0.3.0",
+  "description": "JSON schemas for design system manifests — tokens, utilities, icons, CEM extensions, and DTCG authoring extensions. Multi-platform.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,18 +11,35 @@
   "keywords": [
     "design-system",
     "design-tokens",
+    "dtcg",
     "json-schema",
     "custom-elements-manifest",
     "css-utilities",
     "lsp",
     "multi-platform"
   ],
+  "scripts": {
+    "test": "node test/validate.mjs"
+  },
   "exports": {
     "./v0.2/tokens.json": "./v0.2/tokens.json",
     "./v0.2/utilities.json": "./v0.2/utilities.json",
-    "./v0.2/cem-extensions.json": "./v0.2/cem-extensions.json"
+    "./v0.2/cem-extensions.json": "./v0.2/cem-extensions.json",
+    "./v0.3/tokens.json": "./v0.3/tokens.json",
+    "./v0.3/utilities.json": "./v0.3/utilities.json",
+    "./v0.3/icons.json": "./v0.3/icons.json",
+    "./v0.3/cem-extensions.json": "./v0.3/cem-extensions.json",
+    "./v0.3/dtcg-extensions.json": "./v0.3/dtcg-extensions.json",
+    "./examples/*": "./examples/*",
+    "./package.json": "./package.json"
   },
   "files": [
-    "v0.2/"
-  ]
+    "v0.2/",
+    "v0.3/",
+    "examples/"
+  ],
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
 }
