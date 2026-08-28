@@ -41,9 +41,11 @@ addFormats(ajv);
 
 const tokensSchema = read('v0.3/tokens.json');
 const extSchema = read('v0.3/dtcg-extensions.json');
+const dtcgFormatSchema = read('dtcg/2025.10/format.json');
 ajv.addSchema(extSchema);
 
 const validateManifest = ajv.compile(tokensSchema);
+const validateDtcg = ajv.compile(dtcgFormatSchema);
 const validateToken = ajv.compile({ $ref: `${extSchema.$id}#/definitions/TokenExtensions` });
 const validateGroup = ajv.compile({ $ref: `${extSchema.$id}#/definitions/GroupExtensions` });
 
@@ -82,6 +84,18 @@ function validateProject(project) {
   console.log(`\n${'═'.repeat(60)}\n${project.name} — ${project.description}\n${'═'.repeat(60)}`);
 
   const manifest = read(project.expected);
+  const srcFiles = readdirSync(join(root, project.source)).filter((f) => f.endsWith('.tokens.json'));
+
+  console.log('\n[0] DTCG source → DTCG 2025.10 Format Module');
+  check('source contains at least one .tokens.json', srcFiles.length > 0);
+  for (const file of srcFiles) {
+    const source = read(join(project.source, file));
+    check(
+      `${file} validates`,
+      validateDtcg(source),
+      validateDtcg.errors ? ajv.errorsText(validateDtcg.errors) : '',
+    );
+  }
 
   console.log('\n[1] Manifest → v0.3/tokens.json');
   check(
@@ -108,8 +122,6 @@ function validateProject(project) {
       walk(v, path ? `${path}.${k}` : k, file);
     }
   }
-  const srcFiles = readdirSync(join(root, project.source)).filter((f) => f.endsWith('.tokens.json'));
-  check('source contains at least one .tokens.json', srcFiles.length > 0);
   for (const f of srcFiles) walk(read(join(project.source, f)), '', f);
 
   console.log('\n[3] Semantic checks');
@@ -216,6 +228,7 @@ const neg = [
   ['unknown key in extensions namespace', validateToken, { notARealField: true }],
   ['priority out of range', validateToken, { priority: 500 }],
   ['group extensions may not carry token-only fields', validateGroup, { since: '1.0.0' }],
+  ['invalid DTCG token name', validateDtcg, { 'bad.name': { $value: 'nope' } }],
 ];
 for (const [name, fn, doc] of neg) check(`rejects: ${name}`, !fn(doc));
 

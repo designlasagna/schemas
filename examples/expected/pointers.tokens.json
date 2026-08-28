@@ -170,6 +170,7 @@
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "16px",
           "fontWeight": 400,
+          "letterSpacing": "0px",
           "lineHeight": 1.5
         }
       },
@@ -185,6 +186,10 @@
             "unit": "px"
           },
           "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
           "lineHeight": 1.5
         }
       },
@@ -345,6 +350,7 @@
           "fontFamily": "Helvetica, Arial, sans-serif",
           "fontSize": "32px",
           "fontWeight": 700,
+          "letterSpacing": "0px",
           "lineHeight": 1.5
         }
       },
@@ -358,6 +364,9 @@
             "unit": "px"
           },
           "fontWeight": 700,
+          "letterSpacing": {
+            "$ref": "#/base/text/$value/letterSpacing"
+          },
           "lineHeight": {
             "$ref": "#/base/text/$value/lineHeight"
           }

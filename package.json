@@ -1,11 +1,11 @@
 {
   "name": "@designlasagna/schemas",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "JSON schemas for design system manifests — tokens, utilities, icons, CEM extensions, and DTCG authoring extensions. Multi-platform.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/designlasagna/schemas"
+    "url": "git+https://github.com/designlasagna/schemas.git"
   },
   "homepage": "https://designlasagna.recipes",
   "keywords": [
@@ -31,12 +31,14 @@
     "./v0.3/icons.json": "./v0.3/icons.json",
     "./v0.3/cem-extensions.json": "./v0.3/cem-extensions.json",
     "./v0.3/dtcg-extensions.json": "./v0.3/dtcg-extensions.json",
+    "./dtcg/2025.10/format.json": "./dtcg/2025.10/format.json",
     "./examples/*": "./examples/*",
     "./package.json": "./package.json"
   },
   "files": [
     "v0.2/",
     "v0.3/",
+    "dtcg/",
     "examples/"
   ],
   "devDependencies": {
