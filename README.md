@@ -1,6 +1,6 @@
 # @designlasagna/schemas
 
-> Layer your design system right. 🍝
+> JSON Schema contracts for Design Lasagna manifests and DTCG authoring extensions.
 
 JSON schemas for design system manifests — tokens, utilities, and CEM extensions.
 
@@ -145,19 +145,19 @@ The Language Server uses `removal` dates to escalate diagnostic severity:
 | < 30 days away | 🔴 Error |
 | Past due | 🔴 Error |
 
-## Releases
+## Releases and validation
 
-The current schema line is v0.3. Pin consumers to a release tag (for example,
-`v0.3.0`) when installing from Git, or use the corresponding published `0.3.x`
-npm version. The package retains the v0.2 schema exports for existing consumers.
+The current published package is [`@designlasagna/schemas@0.3.4`](https://www.npmjs.com/package/@designlasagna/schemas). Its `0.3.x` package line implements the stable `v0.3` schema contract; the package also retains `v0.2` exports for existing consumers.
 
-Validate the checked-out v0.3 schemas with:
+Validate a checkout before opening a pull request:
 
 ```bash
 npm ci
 npm run validate
 npm test
 ```
+
+Publishing uses npm trusted publishing. A pushed, annotated version tag matching `package.json` (for example, `v0.3.4`) runs validation and then publishes with provenance in GitHub Actions. Do not publish from a local machine or retag a release; publish a new patch version for corrections.
 
 ## License
 
