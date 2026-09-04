@@ -29,7 +29,7 @@
               "storybook": "https://example.com/storybook/?path=/docs/color--backgrounds"
             },
             "platforms": {
-              "ios": { "reference": "DsTokens.color.bgPrimary", "usage": "Color.dsBgPrimary" }
+              "ios": { "reference": "DsTokens.color.bgPrimary" }
             },
             "relations": [
               {

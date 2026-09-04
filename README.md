@@ -75,16 +75,13 @@ Tokens and utilities support optional `platforms` objects for multi-platform des
   "cssVariable": "--ds-color-bg-primary",
   "platforms": {
     "web": {
-      "reference": "--ds-color-bg-primary",
-      "usage": "var(--ds-color-bg-primary)"
+      "reference": "--ds-color-bg-primary"
     },
     "ios": {
-      "reference": "DsTokens.color.bgPrimary",
-      "usage": "Color.dsBgPrimary"
+      "reference": "DsTokens.color.bgPrimary"
     },
     "android": {
-      "reference": "DsTheme.colors.bgPrimary",
-      "usage": "DsTheme.colors.bgPrimary"
+      "reference": "DsTheme.colors.bgPrimary"
     }
   },
   "resolved": { "light": "#00427a", "dark": "#52a8e1" }

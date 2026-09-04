@@ -227,6 +227,9 @@ const neg = [
   ['deprecated without message', validateToken, { deprecated: { removal: '2026-01-01' } }],
   ['unknown key in extensions namespace', validateToken, { notARealField: true }],
   ['priority out of range', validateToken, { priority: 500 }],
+  ['platform mappings may not carry `usage`', validateToken, {
+    platforms: { web: { reference: '--ds-color-primary', usage: 'var(--ds-color-primary)' } },
+  }],
   ['group extensions may not carry token-only fields', validateGroup, { since: '1.0.0' }],
   ['invalid DTCG token name', validateDtcg, { 'bad.name': { $value: 'nope' } }],
 ];

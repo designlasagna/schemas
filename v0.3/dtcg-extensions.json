@@ -208,10 +208,9 @@
     "PlatformMapping": {
       "type": "object",
       "required": ["reference"],
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
-        "reference": { "type": "string" },
-        "usage": { "type": "string" }
+        "reference": { "type": "string" }
       }
     },
 

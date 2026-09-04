@@ -93,8 +93,7 @@
       },
       "platforms": {
         "web": {
-          "reference": "--dlp-base-blue",
-          "usage": "var(--dlp-base-blue)"
+          "reference": "--dlp-base-blue"
         }
       },
       "resolved": {
@@ -131,8 +130,7 @@
       },
       "platforms": {
         "web": {
-          "reference": "--dlp-base-spacing",
-          "usage": "var(--dlp-base-spacing)"
+          "reference": "--dlp-base-spacing"
         }
       },
       "resolved": {
@@ -161,8 +159,7 @@
       "description": "Body text style.",
       "platforms": {
         "web": {
-          "reference": "--dlp-base-text",
-          "usage": "var(--dlp-base-text)"
+          "reference": "--dlp-base-text"
         }
       },
       "resolved": {
@@ -213,8 +210,7 @@
       },
       "platforms": {
         "web": {
-          "reference": "--dlp-derived-primary",
-          "usage": "var(--dlp-derived-primary)"
+          "reference": "--dlp-derived-primary"
         }
       },
       "resolved": {
@@ -242,8 +238,7 @@
       "description": "Property-level pointer into a colour component (DTCG 7.3.1).",
       "platforms": {
         "web": {
-          "reference": "--dlp-derived-primary-hue",
-          "usage": "var(--dlp-derived-primary-hue)"
+          "reference": "--dlp-derived-primary-hue"
         }
       },
       "resolved": {
@@ -274,8 +269,7 @@
       },
       "platforms": {
         "web": {
-          "reference": "--dlp-derived-small",
-          "usage": "var(--dlp-derived-small)"
+          "reference": "--dlp-derived-small"
         }
       },
       "resolved": {
@@ -309,8 +303,7 @@
       },
       "platforms": {
         "web": {
-          "reference": "--dlp-derived-large",
-          "usage": "var(--dlp-derived-large)"
+          "reference": "--dlp-derived-large"
         }
       },
       "resolved": {
@@ -341,8 +334,7 @@
       "description": "Inherits fontFamily and lineHeight from base.text (DTCG 7.3.3).",
       "platforms": {
         "web": {
-          "reference": "--dlp-derived-heading",
-          "usage": "var(--dlp-derived-heading)"
+          "reference": "--dlp-derived-heading"
         }
       },
       "resolved": {
@@ -392,8 +384,7 @@
       },
       "platforms": {
         "web": {
-          "reference": "--dlp-derived-chained",
-          "usage": "var(--dlp-derived-chained)"
+          "reference": "--dlp-derived-chained"
         }
       },
       "resolved": {
@@ -422,8 +413,7 @@
       },
       "platforms": {
         "web": {
-          "reference": "--dlp-palette-seed",
-          "usage": "var(--dlp-palette-seed)"
+          "reference": "--dlp-palette-seed"
         }
       },
       "resolved": {
@@ -471,8 +461,7 @@
       },
       "platforms": {
         "web": {
-          "reference": "--dlp-color-accent",
-          "usage": "var(--dlp-color-accent)"
+          "reference": "--dlp-color-accent"
         }
       },
       "resolved": {
