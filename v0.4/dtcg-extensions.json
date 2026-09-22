@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://designlasagna.recipes/schemas/v0.3/dtcg-extensions.json",
+  "$id": "https://designlasagna.recipes/schemas/v0.4/dtcg-extensions.json",
   "title": "DTCG Extensions for Design Systems",
-  "description": "Design Lasagna governance metadata carried inside DTCG `$extensions` under the reverse-domain key `recipes.designlasagna`. This is the authoring-side counterpart to v0.3/tokens.json: everything here is human-authored and cannot be derived by a build tool. Resolver output (id, path, resolved, modes) is NOT represented here.",
+  "description": "Design Lasagna governance metadata carried inside DTCG `$extensions` under the reverse-domain key `recipes.designlasagna`. This is the authoring-side counterpart to v0.4/tokens.json: everything here is human-authored and cannot be derived by a build tool. Resolver output (id, path, resolved, modes) is NOT represented here. For lifecycle resolution, the nearest declaration replaces the whole inherited lifecycle record; fields are never merged from older ancestors. Standard `$deprecated: false` clears ancestor deprecation. At the same node, a positive extension deprecation object wins over standard `$deprecated: false` and consumers report a lifecycle conflict.",
 
   "definitions": {
     "TokenExtensions": {
@@ -48,6 +48,7 @@
           "type": "string",
           "description": "Version or date the token was introduced."
         },
+        "status": { "$ref": "lifecycle.json#/definitions/Status" },
         "keywords": {
           "type": "array",
           "items": { "type": "string" },
@@ -96,6 +97,7 @@
           "description": "Granular Lasagna type for every descendant. Common case: a `radius` group whose DTCG `$type` is `dimension` but whose Lasagna type is `borderRadius`."
         },
         "priority": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "status": { "$ref": "lifecycle.json#/definitions/Status" },
         "keywords": { "type": "array", "items": { "type": "string" } },
         "tags": { "type": "array", "items": { "type": "string" } },
         "usage": { "$ref": "#/definitions/Usage" },
@@ -104,30 +106,13 @@
         "format": { "$ref": "#/definitions/Format" },
         "deprecated": {
           "$ref": "#/definitions/Deprecated",
-          "description": "Deprecates every descendant token. Descendants MAY override with a more specific message."
+          "description": "Deprecates every descendant token unless a nearer node declares lifecycle state. The nearest declaration replaces this whole record rather than merging fields. Standard `$deprecated: false` on a descendant clears this inherited deprecation."
         }
       }
     },
 
     "Deprecated": {
-      "type": "object",
-      "required": ["message"],
-      "description": "Lifecycle metadata. DTCG `$deprecated` (5.2.4) only carries true|string, so `removal` and `replacement` must live here. Authors SHOULD also set DTCG `$deprecated` to the same message string for cross-tool interop; on conflict this object wins.",
-      "additionalProperties": false,
-      "properties": {
-        "message": {
-          "type": "string",
-          "description": "Human-readable reason plus migration guidance."
-        },
-        "removal": {
-          "type": "string",
-          "description": "When it will be removed. ISO date (2026-07-30), semver (3.0.0), or quarter (2026-Q3). ISO dates drive language-server severity escalation."
-        },
-        "replacement": {
-          "type": "string",
-          "description": "Machine-readable replacement token id. MUST resolve to an existing token."
-        }
-      }
+      "$ref": "lifecycle.json#/definitions/StrictDeprecated"
     },
 
     "Usage": {

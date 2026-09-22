@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://designlasagna.recipes/schemas/v0.4/cem-extensions.json",
+  "title": "CEM Extensions for Design Systems",
+  "description": "Definitions-only, composable lifecycle fragments for Custom Elements Manifest entries. This document is not a validator for a full Custom Elements Manifest; consumers apply the relevant definition alongside their pinned CEM schema.",
+  "definitions": {
+    "LifecycleFields": {
+      "type": "object",
+      "description": "Lifecycle siblings that may be composed with a CEM entry. The fragment remains permissive so standard CEM fields and other extensions are preserved.",
+      "properties": {
+        "deprecated": {
+          "oneOf": [
+            { "type": "boolean" },
+            { "type": "string" }
+          ],
+          "description": "Standard CEM deprecation marker. A string carries the human-readable deprecation message."
+        },
+        "status": { "$ref": "lifecycle.json#/definitions/Status" },
+        "removal": {
+          "type": "string",
+          "description": "Removal target: ISO date YYYY-MM-DD, semver X.Y.Z, or quarter YYYY-Qn."
+        },
+        "replacement": {
+          "type": "string",
+          "description": "Machine-readable replacement identifier, scoped to the same CEM entity kind and owner."
+        }
+      }
+    },
+    "DeprecatedValue": {
+      "$ref": "lifecycle.json#/definitions/DeprecatedValue"
+    },
+    "AttributeExtensions": {
+      "type": "object",
+      "description": "Composable extension fields for a CEM attribute entry. Attribute-level lifecycle and deprecated values are independent axes; this fragment remains permissive for standard CEM siblings.",
+      "properties": {
+        "enum": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "deprecated": {
+          "oneOf": [
+            { "type": "boolean" },
+            { "type": "string" }
+          ]
+        },
+        "status": { "$ref": "lifecycle.json#/definitions/Status" },
+        "removal": { "type": "string" },
+        "replacement": { "type": "string" },
+        "deprecatedValues": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DeprecatedValue" }
+        }
+      }
+    },
+    "DeclarationExtensions": {
+      "$ref": "#/definitions/LifecycleFields"
+    },
+    "MemberExtensions": {
+      "$ref": "#/definitions/LifecycleFields"
+    },
+    "SlotExtensions": {
+      "$ref": "#/definitions/LifecycleFields"
+    },
+    "CssPropertyExtensions": {
+      "$ref": "#/definitions/LifecycleFields"
+    },
+    "CssPartExtensions": {
+      "$ref": "#/definitions/LifecycleFields"
+    },
+    "EventExtensions": {
+      "$ref": "#/definitions/LifecycleFields"
+    }
+  }
+}

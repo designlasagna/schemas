@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://designlasagna.recipes/v0.2/utilities.json",
+  "$id": "https://designlasagna.recipes/schemas/v0.2/utilities.json",
   "title": "Design System Utilities Manifest",
   "description": "Schema for utility/style preset manifests consumed by the DS Language Server and documentation tools. Supports multi-platform output (CSS classes, SwiftUI modifiers, Compose styles, etc.).",
   "type": "object",

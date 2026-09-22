@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://designlasagna.recipes/schemas/v0.4/lifecycle.json",
+  "title": "Lifecycle Fragments (v0.4)",
+  "description": "Definitions-only lifecycle fragment for the v0.4 lifecycle contract (RFC 0002). Consumers select the fragments they need via $ref from this file; this document is not a validator for any full manifest format.",
+  "definitions": {
+    "Status": {
+      "type": "string",
+      "description": "Lifecycle status. Only 'deprecated' and 'removed' are normative; any other value is informational."
+    },
+    "Deprecated": {
+      "type": "object",
+      "required": ["message"],
+      "description": "Canonical deprecation record for native manifest entities. Permissive on unknown properties.",
+      "properties": {
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable reason plus migration guidance. Never parsed for lifecycle meaning."
+        },
+        "removal": {
+          "type": "string",
+          "description": "Removal target: ISO date YYYY-MM-DD, semver X.Y.Z, or quarter YYYY-Qn. Only ISO dates drive time-aware severity."
+        },
+        "replacement": {
+          "type": "string",
+          "description": "Machine-readable replacement identifier, scoped by entity type."
+        }
+      }
+    },
+    "StrictDeprecated": {
+      "type": "object",
+      "required": ["message"],
+      "additionalProperties": false,
+      "description": "Closed deprecation record for the DTCG extension namespace.",
+      "properties": {
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable reason plus migration guidance. Never parsed for lifecycle meaning."
+        },
+        "removal": {
+          "type": "string",
+          "description": "Removal target: ISO date YYYY-MM-DD, semver X.Y.Z, or quarter YYYY-Qn. Only ISO dates drive time-aware severity."
+        },
+        "replacement": {
+          "type": "string",
+          "description": "Machine-readable replacement identifier, scoped by entity type."
+        }
+      }
+    },
+    "NativeDeprecation": {
+      "oneOf": [
+        {
+          "type": "boolean",
+          "const": false,
+          "description": "Explicit 'not deprecated' assertion in a native manifest. DTCG source cancellation uses the standard `$deprecated: false` field, not an extension value."
+        },
+        {
+          "type": "null",
+          "description": "Not asserted; no lifecycle claim."
+        },
+        {
+          "$ref": "#/definitions/Deprecated"
+        }
+      ]
+    },
+    "DeprecatedValue": {
+      "type": "object",
+      "required": ["value", "message"],
+      "description": "Deprecation record for a specific attribute value (CEM). Permissive on unknown properties.",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "The deprecated value."
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable reason plus migration guidance. Never parsed for lifecycle meaning."
+        },
+        "removal": {
+          "type": "string",
+          "description": "Removal target: ISO date YYYY-MM-DD, semver X.Y.Z, or quarter YYYY-Qn. Only ISO dates drive time-aware severity."
+        },
+        "replacement": {
+          "type": "string",
+          "description": "Machine-readable replacement identifier; for CEM attribute values, an enum value of the same attribute."
+        }
+      }
+    }
+  }
+}

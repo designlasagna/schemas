@@ -18,6 +18,14 @@ Used by the [Design Lasagna Language Server](https://github.com/designlasagna/ds
 | `v0.3/cem-extensions.json` | Current CEM lifecycle extension schema |
 | `v0.3/dtcg-extensions.json` | `recipes.designlasagna` metadata for DTCG source files |
 | `v0.3/icons.json` | Current icon manifest schema |
+| `v0.4/{tokens,utilities,icons}.json` | Unreleased lifecycle contract; explicit profile opt-in required |
+| `v0.4/{cem-extensions,dtcg-extensions}.json` | Unreleased standards-compatible lifecycle extensions |
+| `v0.4/lifecycle.json` | Shared lifecycle fragments; register alongside v0.4 schemas for offline validation |
+
+The [v0.4 lifecycle guide](docs/lifecycle.md) covers authoring, compatibility,
+precedence, inheritance, and [consumer test vectors](examples/lifecycle/consumer-cases.json).
+The pending `@designlasagna/schemas@0.4.0` release is an unpublished local artifact;
+existing v0.2/v0.3 contracts remain unchanged. See the [migration and release handoff](docs/lifecycle-migration.md).
 
 ## Usage
 
@@ -25,7 +33,7 @@ Used by the [Design Lasagna Language Server](https://github.com/designlasagna/ds
 
 ```json
 {
-  "$schema": "https://designlasagna.recipes/v0.3/tokens.json",
+  "$schema": "https://designlasagna.recipes/schemas/v0.3/tokens.json",
   "schemaVersion": "0.3.0",
   "tokens": [...]
 }
@@ -74,15 +82,9 @@ Tokens and utilities support optional `platforms` objects for multi-platform des
   "id": "color.bg.primary",
   "cssVariable": "--ds-color-bg-primary",
   "platforms": {
-    "web": {
-      "reference": "--ds-color-bg-primary"
-    },
-    "ios": {
-      "reference": "DsTokens.color.bgPrimary"
-    },
-    "android": {
-      "reference": "DsTheme.colors.bgPrimary"
-    }
+    "web": { "reference": "--ds-color-bg-primary" },
+    "ios": { "reference": "DsTokens.color.bgPrimary" },
+    "android": { "reference": "DsTheme.colors.bgPrimary" }
   },
   "resolved": { "light": "#00427a", "dark": "#52a8e1" }
 }
@@ -113,14 +115,18 @@ Web-only manifests work without `platforms` — `cssVariable` and `properties` s
 
 ## Deprecation Object
 
-All schemas share a unified deprecation shape:
+Native token, utility and icon manifests share this structured payload. CEM keeps
+standard boolean/string `deprecated` with sibling metadata; DTCG keeps standard
+boolean/string `$deprecated` plus the structured vendor extension. Do not place
+an object in either standard field. See the [v0.4 guide](docs/lifecycle.md) for the
+new nonempty-message and explicit-false contract; the example below uses a token ID.
 
 ```json
 {
   "deprecated": {
-    "message": "Use `--ds-color-primary-pressed` instead.",
-    "removal": "2026-07-30",
-    "replacement": "--ds-color-primary-pressed"
+    "message": "Use color.primary.pressed instead.",
+    "removal": "2027-01-01",
+    "replacement": "color.primary.pressed"
   }
 }
 ```
@@ -133,7 +139,10 @@ All schemas share a unified deprecation shape:
 
 ## Time-aware diagnostics (in the Language Server)
 
-The Language Server uses `removal` dates to escalate diagnostic severity:
+Target v0.4 consumer policy uses real ISO `removal` dates and UTC calendar days
+to escalate severity. This schema change does not implement that policy in the
+Language Server; existing consumers differ at the 30-day boundary. Versions and
+quarters are display-only and do not derive dates or removed status:
 
 | Removal date | Severity |
 |---|---|
@@ -144,7 +153,7 @@ The Language Server uses `removal` dates to escalate diagnostic severity:
 
 ## Releases and validation
 
-The current published package is [`@designlasagna/schemas@0.3.4`](https://www.npmjs.com/package/@designlasagna/schemas). Its `0.3.x` package line implements the stable `v0.3` schema contract; the package also retains `v0.2` exports for existing consumers.
+The currently prepared (not yet published) package version is `@designlasagna/schemas@0.4.0`. This breaking pre-1.0 minor release carries the explicitly selected `v0.4` contract; it retains v0.2/v0.3 exports for existing consumers. See the [migration handoff](docs/lifecycle-migration.md) for the compatibility window and release authorization steps.
 
 Validate a checkout before opening a pull request:
 
@@ -154,7 +163,7 @@ npm run validate
 npm test
 ```
 
-Publishing uses npm trusted publishing. A pushed, annotated version tag matching `package.json` (for example, `v0.3.4`) runs validation and then publishes with provenance in GitHub Actions. Do not publish from a local machine or retag a release; publish a new patch version for corrections.
+Publishing uses npm trusted publishing. After explicit authorization, a pushed, annotated version tag matching `package.json` (for this release, `v0.4.0`) runs validation and then publishes with provenance in GitHub Actions. Do not publish from a local machine or retag a release; publish a new version for corrections.
 
 ## License
 

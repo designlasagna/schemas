@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://designlasagna.recipes/schemas/v0.3/icons.json",
+  "$id": "https://designlasagna.recipes/schemas/v0.4/icons.json",
   "title": "Design System Icons Manifest",
   "description": "Schema for resolved icon manifests consumed by language servers and tooling.",
   "type": "object",
@@ -67,6 +67,7 @@
           "type": "string",
           "description": "Version or date when this icon was introduced."
         },
+        "status": { "$ref": "lifecycle.json#/definitions/Status" },
         "docs": { "$ref": "#/definitions/Docs" },
         "platforms": {
           "type": "object",
@@ -74,12 +75,7 @@
           "description": "Platform-specific icon references. At least one platform is required.",
           "additionalProperties": { "$ref": "#/definitions/PlatformIcon" }
         },
-        "deprecated": {
-          "oneOf": [
-            { "type": "null" },
-            { "$ref": "#/definitions/Deprecated" }
-          ]
-        },
+        "deprecated": { "$ref": "lifecycle.json#/definitions/NativeDeprecation" },
         "tags": {
           "type": "array",
           "items": { "type": "string" }
@@ -110,14 +106,6 @@
       },
       "additionalProperties": { "type": "string", "format": "uri" }
     },
-    "Deprecated": {
-      "type": "object",
-      "required": ["message"],
-      "properties": {
-        "message": { "type": "string" },
-        "removal": { "type": "string" },
-        "replacement": { "type": "string" }
-      }
-    }
+    "Deprecated": { "$ref": "lifecycle.json#/definitions/Deprecated" }
   }
 }

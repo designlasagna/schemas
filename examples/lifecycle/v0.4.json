@@ -1,0 +1,57 @@
+{
+  "tokens": {
+    "$schema": "https://designlasagna.recipes/schemas/v0.4/tokens.json",
+    "schemaVersion": "0.4.0",
+    "tokens": [
+      {"id": "space.old", "resolved": {"default": "4px"}, "status": "deprecated", "deprecated": {"message": "Use space.new.", "replacement": "space.new", "removal": "2027-01-01"}},
+      {"id": "space.new", "resolved": {"default": "8px"}, "deprecated": false},
+      {"id": "space.custom", "resolved": {}, "status": "team-preview", "deprecated": null}
+    ]
+  },
+  "utilities": {
+    "$schema": "https://designlasagna.recipes/schemas/v0.4/utilities.json",
+    "schemaVersion": "0.4.0",
+    "utilities": [
+      {"name": "old-spacing", "deprecated": {"message": "Use new-spacing.", "replacement": "new-spacing", "removal": "2.0.0"}},
+      {"name": "new-spacing", "deprecated": false}
+    ]
+  },
+  "icons": {
+    "$schema": "https://designlasagna.recipes/schemas/v0.4/icons.json",
+    "schemaVersion": "0.4.0",
+    "icons": [
+      {"name": "old-arrow", "platforms": {"web": {"component": "OldArrow"}}, "status": "removed", "deprecated": {"message": "Use arrow.", "replacement": "arrow", "removal": "2027-Q1"}},
+      {"name": "arrow", "platforms": {"web": {"component": "Arrow"}}, "deprecated": false}
+    ]
+  },
+  "dtcg": {
+    "space": {
+      "$type": "dimension",
+      "$deprecated": "Legacy spacing.",
+      "$extensions": {"recipes.designlasagna": {"deprecated": {"message": "Legacy spacing.", "removal": "2027-01-01"}}},
+      "inherited": {"$value": {"value": 4, "unit": "px"}},
+      "active": {"$value": {"value": 8, "unit": "px"}, "$deprecated": false},
+      "override": {"$value": {"value": 12, "unit": "px"}, "$deprecated": "Different migration, no inherited removal."}
+    }
+  },
+  "cem": {
+    "schemaVersion": "1.0.0",
+    "modules": [{
+      "kind": "javascript-module",
+      "path": "button.js",
+      "declarations": [{
+        "kind": "class", "name": "Button", "customElement": true, "tagName": "ds-button",
+        "status": "team-preview",
+        "attributes": [
+          {"name": "variant", "enum": ["old", "new"], "deprecated": false, "deprecatedValues": [{"value": "old", "message": "Use new.", "replacement": "new"}]},
+          {"name": "legacy-mode", "deprecated": "Use variant.", "replacement": "variant", "removal": "2027-01-01"}
+        ],
+        "members": [{"kind": "field", "name": "oldField", "deprecated": true}],
+        "slots": [{"name": "old-slot", "deprecated": "Use the default slot."}],
+        "cssProperties": [{"name": "--old", "deprecated": true}],
+        "cssParts": [{"name": "old-part", "deprecated": true}],
+        "events": [{"name": "old-change", "type": {"text": "Event"}, "deprecated": true}]
+      }]
+    }]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@designlasagna/schemas",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "JSON schemas for design system manifests — tokens, utilities, icons, CEM extensions, and DTCG authoring extensions. Multi-platform.",
   "license": "MIT",
   "repository": {
@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "validate": "node scripts/validate-schemas.mjs",
-    "test": "node test/validate.mjs"
+    "test": "node test/validate.mjs && node test/lifecycle.mjs"
   },
   "exports": {
     "./v0.2/tokens.json": "./v0.2/tokens.json",
@@ -31,6 +31,12 @@
     "./v0.3/icons.json": "./v0.3/icons.json",
     "./v0.3/cem-extensions.json": "./v0.3/cem-extensions.json",
     "./v0.3/dtcg-extensions.json": "./v0.3/dtcg-extensions.json",
+    "./v0.4/lifecycle.json": "./v0.4/lifecycle.json",
+    "./v0.4/tokens.json": "./v0.4/tokens.json",
+    "./v0.4/utilities.json": "./v0.4/utilities.json",
+    "./v0.4/icons.json": "./v0.4/icons.json",
+    "./v0.4/cem-extensions.json": "./v0.4/cem-extensions.json",
+    "./v0.4/dtcg-extensions.json": "./v0.4/dtcg-extensions.json",
     "./dtcg/2025.10/format.json": "./dtcg/2025.10/format.json",
     "./examples/*": "./examples/*",
     "./package.json": "./package.json"
@@ -38,6 +44,9 @@
   "files": [
     "v0.2/",
     "v0.3/",
+    "v0.4/",
+    "docs/lifecycle.md",
+    "docs/lifecycle-migration.md",
     "dtcg/",
     "examples/"
   ],

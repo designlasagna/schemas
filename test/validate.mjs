@@ -99,6 +99,11 @@ function validateProject(project) {
 
   console.log('\n[1] Manifest → v0.3/tokens.json');
   check(
+    `${project.expected} declares the canonical tokens schema URL`,
+    manifest.$schema === tokensSchema.$id,
+    `expected ${tokensSchema.$id}, got ${manifest.$schema ?? '(missing)'}`,
+  );
+  check(
     `${project.expected} validates`,
     validateManifest(manifest),
     validateManifest.errors ? ajv.errorsText(validateManifest.errors, { separator: '\n      ' }) : '',
