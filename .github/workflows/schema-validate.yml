@@ -39,5 +39,5 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Verify tag matches package version
-        run: test "${GITHUB_REF_NAME}" = "v$(node -p \"require('./package.json').version\")"
+        run: test "${GITHUB_REF_NAME}" = "v$(node -p 'require("./package.json").version')"
       - run: npm publish --provenance --access public
