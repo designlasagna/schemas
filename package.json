@@ -48,7 +48,8 @@
     "docs/lifecycle.md",
     "docs/lifecycle-migration.md",
     "dtcg/",
-    "examples/"
+    "examples/",
+    "CHANGELOG.md"
   ],
   "devDependencies": {
     "ajv": "^8.20.0",
