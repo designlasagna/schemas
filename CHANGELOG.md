@@ -1,8 +1,16 @@
 # Changelog
 
+## 0.4.2 — 2026-10-06
+
+### Changed
+
+- Added the 0.4.1 entry and reworded a 0.3.3 entry in this changelog.
+
 ## 0.4.1 — 2026-10-06
 
-Nothing yet.
+### Changed
+
+- The package now ships `CHANGELOG.md`, with release history from 0.3.0.
 
 ## 0.4.0 — 2026-09-24
 
@@ -81,7 +89,7 @@ Adds the v0.4 contracts under `v0.4/`, built on a shared lifecycle fragment. v0.
 ### Changed
 
 - Publishing uses npm trusted publishing.
-- Removed a legacy reference from the RFC text.
+- Removed a legacy reference from the internal design notes.
 
 ## 0.3.2 — 2026-08-27
 
