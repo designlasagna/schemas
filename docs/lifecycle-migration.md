@@ -2,15 +2,14 @@
 
 ## Version and release boundary
 
-The lifecycle contract is schema version **`0.4.0`** and the pending package release is
+The lifecycle contract is schema version **`0.4.0`** and shipped in package release
 **`@designlasagna/schemas@0.4.0`**. This is a breaking pre-1.0 minor release, not a
 `0.3.x` patch: it adds a new explicitly selected profile and changes validation and
-consumer semantics. It is currently a local, unpublished integration artifact.
+consumer semantics.
 
-Do not publish from a workstation. After review and explicit release authorization,
-commit the release, create and push annotated tag `v0.4.0`, and let the trusted
-publishing workflow validate and publish it with provenance. The tag must exactly
-match `package.json`; never retag or publish `0.3.5` as this contract.
+Publish only through tagged CI, never from a workstation: commit the release, push an
+annotated tag `v<version>` matching `package.json`, and let the trusted publishing
+workflow validate and publish it with provenance. Never retag a release.
 
 ## Compatibility window and selection
 
@@ -136,26 +135,24 @@ Only exact ISO `YYYY-MM-DD` removals drive UTC severity. Semver and `YYYY-Qn` ar
 displayed as authored; legacy `Qn-YYYY` is display-only. Never infer a removal date,
 removed status, replacement, or value deprecation from prose.
 
-## Consumer handoff
+## Adopting v0.4
 
-The agreed local artifact is this checkout at `@designlasagna/schemas@0.4.0`, with:
+`@designlasagna/schemas@0.4.0` ships with:
 
 - exports: `v0.4/lifecycle.json`, tokens, utilities, icons, CEM extensions, and DTCG extensions;
 - examples: `examples/lifecycle/v0.4.json` and `schema-cases.json`;
 - executable downstream vectors: `examples/lifecycle/consumer-cases.json`.
 
-DSLS must install the packed artifact (or use a local file dependency), explicitly
-select profile `0.4`, and run every consumer vector through parser → normalized
-store → diagnostics → actions. Its implementation must retain legacy behavior when
-the profile is absent. Token-core and token-editor must likewise avoid emitting v0.4
-for an unselected consumer; their required normalization, inheritance, mirror, and
-UTC-policy work remains separate follow-up work.
+Consumers must install the package, explicitly select profile `0.4`, and run every
+consumer vector through parser → normalized store → diagnostics → actions. Implementation
+must retain legacy behavior when the profile is absent. Token-core and token-editor must
+likewise avoid emitting v0.4 for an unselected consumer; their required normalization,
+inheritance, mirror, and UTC-policy work remains separate follow-up work.
 
-## Verification versus publication
+## Verification
 
-Local verification can prove the checkout/package contents only. Before handoff,
-run `npm run validate`, `npm test`, create a tarball with `npm pack`, then install
-that tarball into a temporary consumer and resolve all six exports plus the fixture
-files. This is **not publication evidence**: npm registry availability, provenance,
-tag-triggered CI, and the actually released version exist only after explicit
-authorization and the release workflow completes.
+Before any release, verify the checkout/package contents by running `npm run validate`,
+`npm test`, creating a tarball with `npm pack`, then installing that tarball into a
+temporary consumer and resolving all six exports plus the fixture files. Local
+verification proves only the checkout contents; npm registry availability, provenance,
+and tag-triggered CI validation occur during the publish workflow.

@@ -1,9 +1,9 @@
-# Lifecycle authoring — v0.4 (unreleased)
+# Lifecycle authoring — v0.4
 
-This implements the approved lifecycle design in RFC 0002. The pending package
-release is 0.4.0; this checkout is an **unpublished local integration artifact**.
-Published v0.2/v0.3 schemas are unchanged by this work. Do not apply v0.4 semantics
-retroactively. See the [migration and release handoff](lifecycle-migration.md).
+This implements the approved lifecycle design in RFC 0002. The contract shipped in
+`@designlasagna/schemas` 0.4.0. v0.2/v0.3 validation semantics are unchanged (only their
+`$id`s moved, and v0.3 platform mappings dropped `usage`; see CHANGELOG.md). Do not apply
+v0.4 semantics retroactively. See the [migration guide](lifecycle-migration.md).
 
 ## Select the contract
 

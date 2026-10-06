@@ -13,19 +13,19 @@ Used by the [Design Lasagna Language Server](https://github.com/designlasagna/ds
 | `v0.2/tokens.json` | Design token manifest (resolved values, modes, multi-platform references, deprecation) |
 | `v0.2/utilities.json` | Utility/style preset manifest (categorized, multi-platform, with deprecation) |
 | `v0.2/cem-extensions.json` | Extensions to Custom Elements Manifest for lifecycle management |
-| `v0.3/tokens.json` | Current Design Lasagna token manifest schema |
-| `v0.3/utilities.json` | Current utility/style preset manifest schema |
-| `v0.3/cem-extensions.json` | Current CEM lifecycle extension schema |
+| `v0.3/tokens.json` | v0.3 token manifest schema |
+| `v0.3/utilities.json` | v0.3 utility/style preset manifest schema |
+| `v0.3/cem-extensions.json` | v0.3 CEM lifecycle extension schema |
 | `v0.3/dtcg-extensions.json` | `recipes.designlasagna` metadata for DTCG source files |
-| `v0.3/icons.json` | Current icon manifest schema |
-| `v0.4/{tokens,utilities,icons}.json` | Unreleased lifecycle contract; explicit profile opt-in required |
-| `v0.4/{cem-extensions,dtcg-extensions}.json` | Unreleased standards-compatible lifecycle extensions |
+| `v0.3/icons.json` | v0.3 icon manifest schema |
+| `v0.4/{tokens,utilities,icons}.json` | Current lifecycle contract; explicit profile opt-in required |
+| `v0.4/{cem-extensions,dtcg-extensions}.json` | Current standards-compatible lifecycle extensions |
 | `v0.4/lifecycle.json` | Shared lifecycle fragments; register alongside v0.4 schemas for offline validation |
 
 The [v0.4 lifecycle guide](docs/lifecycle.md) covers authoring, compatibility,
 precedence, inheritance, and [consumer test vectors](examples/lifecycle/consumer-cases.json).
-The pending `@designlasagna/schemas@0.4.0` release is an unpublished local artifact;
-existing v0.2/v0.3 contracts remain unchanged. See the [migration and release handoff](docs/lifecycle-migration.md).
+The v0.4 contract shipped in 0.4.0, a breaking pre-1.0 minor release that retains v0.2/v0.3 exports for existing consumers.
+Their `$id`s moved under `/schemas/` (see [CHANGELOG.md](CHANGELOG.md)). See the [migration guide](docs/lifecycle-migration.md).
 
 ## Usage
 
@@ -33,8 +33,8 @@ existing v0.2/v0.3 contracts remain unchanged. See the [migration and release ha
 
 ```json
 {
-  "$schema": "https://designlasagna.recipes/schemas/v0.3/tokens.json",
-  "schemaVersion": "0.3.0",
+  "$schema": "https://designlasagna.recipes/schemas/v0.4/tokens.json",
+  "schemaVersion": "0.4.0",
   "tokens": [...]
 }
 ```
@@ -43,21 +43,21 @@ existing v0.2/v0.3 contracts remain unchanged. See the [migration and release ha
 
 ```bash
 npm install @designlasagna/schemas ajv-cli
-ajv validate -s node_modules/@designlasagna/schemas/v0.3/tokens.json -d dist/tokens.json
+ajv validate -s node_modules/@designlasagna/schemas/v0.4/tokens.json -r node_modules/@designlasagna/schemas/v0.4/lifecycle.json -d dist/tokens.json
 ```
 
 ### Programmatic
 
 ```js
-import tokenSchema from '@designlasagna/schemas/v0.3/tokens.json' assert { type: 'json' };
-import utilitySchema from '@designlasagna/schemas/v0.3/utilities.json' assert { type: 'json' };
+import tokenSchema from '@designlasagna/schemas/v0.4/tokens.json' with { type: 'json' };
+import utilitySchema from '@designlasagna/schemas/v0.4/utilities.json' with { type: 'json' };
 ```
 
 ## DTCG extensions
 
 Token source remains standard DTCG. Design Lasagna-specific governance metadata
 belongs in `$extensions["recipes.designlasagna"]` and is validated by
-`v0.3/dtcg-extensions.json`. The schema distinguishes group-level fields from
+`v0.4/dtcg-extensions.json`. The schema distinguishes group-level fields from
 token-only fields such as `since`, `platforms`, `relations`, and `metadata`.
 
 ```json
@@ -153,7 +153,7 @@ quarters are display-only and do not derive dates or removed status:
 
 ## Releases and validation
 
-The currently prepared (not yet published) package version is `@designlasagna/schemas@0.4.0`. This breaking pre-1.0 minor release carries the explicitly selected `v0.4` contract; it retains v0.2/v0.3 exports for existing consumers. See the [migration handoff](docs/lifecycle-migration.md) for the compatibility window and release authorization steps.
+The v0.4 contract shipped in 0.4.0, a breaking pre-1.0 minor release that retains v0.2/v0.3 exports for existing consumers. See the [migration guide](docs/lifecycle-migration.md) for the compatibility window and consumer migration path.
 
 Validate a checkout before opening a pull request:
 
@@ -163,7 +163,7 @@ npm run validate
 npm test
 ```
 
-Publishing uses npm trusted publishing. After explicit authorization, a pushed, annotated version tag matching `package.json` (for this release, `v0.4.0`) runs validation and then publishes with provenance in GitHub Actions. Do not publish from a local machine or retag a release; publish a new version for corrections.
+Publishing uses npm trusted publishing. A pushed, annotated version tag matching `package.json` runs validation and then publishes with provenance in GitHub Actions. Do not publish from a local machine or retag a release; publish a new version for corrections.
 
 ## License
 
