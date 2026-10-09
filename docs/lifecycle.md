@@ -8,8 +8,11 @@ v0.4 semantics retroactively. See the [migration guide](lifecycle-migration.md).
 ## Select the contract
 
 - Native manifests: use `schemaVersion: "0.4.0"` and the appropriate
-  [`v0.4` schema](../v0.4/tokens.json). As before, schemaVersion is validated as
-  a string, not a version-dispatch algorithm; consumers must select the right profile.
+  [`v0.4` schema](../v0.4/tokens.json). The released v0.4 schemas intentionally
+  validate `schemaVersion` as any string, so values such as `"0.3.0"` or
+  `"banana"` remain schema-valid. The selected schema does not dispatch or prove
+  the consumer profile: consumers must select and enforce the matching contract.
+  Narrowing this field is a future contract/version decision, not a v0.4 patch.
 - CEM and DTCG: explicitly opt into contract `0.4` in the consuming project's
   resolver/configuration. This repository does not prescribe a new config key or
   implement that selection. With no opt-in, retain the legacy profile.
@@ -123,10 +126,13 @@ Identifiers, not instructions or platform syntax:
 | CEM attribute/member/slot/property/part/event | same kind and owner, exact name |
 | Attribute value | enum value of that same attribute |
 
-Check inherited group replacements for each descendant independently. Unresolved
-or ambiguous targets produce diagnostics and **no action**. Self targets, cycles,
-removed targets, or unsafe edits also produce no action. Component replacement
-remains diagnostic-only; a verified attribute-name edit may be offered. Migration
+A token replacement **must resolve to an existing token** in the same manifest or
+resulting DTCG token set. Check inherited group replacements for each descendant
+independently. This is a semantic consumer requirement: JSON Schema validates the
+field as a string but cannot enforce referential integrity. Unresolved or ambiguous
+targets produce diagnostics and **no action**. Self targets, cycles, removed targets,
+or unsafe edits also produce no action. Component replacement remains
+diagnostic-only; a verified attribute-name edit may be offered. Migration
 instructions belong in message, never replacement.
 
 ## Removal and severity

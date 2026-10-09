@@ -3,6 +3,7 @@
  * Schema + fixture validation harness.
  *
  *  1. JSON Schema validation of each expected manifest against v0.3/tokens.json
+ *     and v0.4/tokens.json
  *  2. JSON Schema validation of every `recipes.designlasagna` block in the DTCG
  *     source against v0.3/dtcg-extensions.json
  *  3. Semantic checks a JSON Schema cannot express (counts, references,
@@ -40,11 +41,15 @@ const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv);
 
 const tokensSchema = read('v0.3/tokens.json');
+const lifecycleSchema = read('v0.4/lifecycle.json');
+const tokensSchemaV04 = read('v0.4/tokens.json');
 const extSchema = read('v0.3/dtcg-extensions.json');
 const dtcgFormatSchema = read('dtcg/2025.10/format.json');
 ajv.addSchema(extSchema);
+ajv.addSchema(lifecycleSchema);
 
 const validateManifest = ajv.compile(tokensSchema);
+const validateManifestV04 = ajv.compile(tokensSchemaV04);
 const validateDtcg = ajv.compile(dtcgFormatSchema);
 const validateToken = ajv.compile({ $ref: `${extSchema.$id}#/definitions/TokenExtensions` });
 const validateGroup = ajv.compile({ $ref: `${extSchema.$id}#/definitions/GroupExtensions` });
@@ -97,17 +102,19 @@ function validateProject(project) {
     );
   }
 
-  console.log('\n[1] Manifest → v0.3/tokens.json');
+  console.log('\n[1] Manifest → v0.3/tokens.json and v0.4/tokens.json');
   check(
-    `${project.expected} declares the canonical tokens schema URL`,
+    `${project.expected} declares the canonical v0.3 tokens schema URL`,
     manifest.$schema === tokensSchema.$id,
     `expected ${tokensSchema.$id}, got ${manifest.$schema ?? '(missing)'}`,
   );
-  check(
-    `${project.expected} validates`,
-    validateManifest(manifest),
-    validateManifest.errors ? ajv.errorsText(validateManifest.errors, { separator: '\n      ' }) : '',
-  );
+  for (const [version, fn] of [['v0.3', validateManifest], ['v0.4', validateManifestV04]]) {
+    check(
+      `${project.expected} validates against ${version}`,
+      fn(manifest),
+      fn.errors ? ajv.errorsText(fn.errors, { separator: '\n      ' }) : '',
+    );
+  }
 
   console.log('\n[2] DTCG $extensions → v0.3/dtcg-extensions.json');
   const foreignExtensions = [];

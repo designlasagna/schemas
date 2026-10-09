@@ -112,7 +112,8 @@
     },
 
     "Deprecated": {
-      "$ref": "lifecycle.json#/definitions/StrictDeprecated"
+      "description": "Token deprecation metadata. If replacement is present, it MUST resolve to an existing token in the resulting token set. For a group declaration, resolve it independently for each descendant that inherits it. This is a semantic consumer requirement; JSON Schema validates only the payload shape and cannot enforce referential integrity.",
+      "allOf": [{ "$ref": "lifecycle.json#/definitions/StrictDeprecated" }]
     },
 
     "Usage": {

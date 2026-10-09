@@ -7,7 +7,7 @@
   "required": ["schemaVersion", "icons"],
   "properties": {
     "$schema": { "type": "string" },
-    "schemaVersion": { "type": "string", "description": "Schema version (semver)" },
+    "schemaVersion": { "type": "string", "description": "Producer-declared schema version. Intentionally accepts any string in v0.4; consumers are responsible for selecting and enforcing the appropriate contract profile." },
     "generatedAt": { "type": "string", "format": "date-time" },
     "designSystem": { "$ref": "#/definitions/DesignSystemMeta" },
     "icons": {
@@ -89,7 +89,7 @@
         "usage": { "type": "string" },
         "component": { "type": "string" }
       },
-      "oneOf": [
+      "anyOf": [
         { "required": ["import"] },
         { "required": ["usage"] },
         { "required": ["component"] }

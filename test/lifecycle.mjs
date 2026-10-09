@@ -53,6 +53,11 @@ const example = read('examples/lifecycle/v0.4.json');
 for (const format of ['tokens', 'utilities', 'icons']) {
   const fn = ajv.getSchema(`${base}v0.4/${format}.json`);
   validate(`${format} authoring example`, fn, example[format]);
+  // Released v0.4 intentionally leaves profile selection to consumers.
+  for (const schemaVersion of ['0.3.0', 'banana']) {
+    validate(`${format}: permissive schemaVersion ${schemaVersion}`, fn,
+      { ...example[format], schemaVersion });
+  }
   const one = structuredClone(example[format]);
   one[format] = [one[format][0]];
   for (const [label, value, expected] of [
@@ -76,6 +81,23 @@ for (const format of ['tokens', 'utilities', 'icons']) {
 }
 const nested = { schemaVersion: '0.4.0', categories: [{ name: 'spacing', utilities: example.utilities.utilities }] };
 validate('nested utilities lifecycle', ajv.getSchema(`${base}v0.4/utilities.json`), nested);
+
+const platformIcon = fragment('icons#PlatformIcon');
+for (const [name, value] of [
+  ['import only', { import: '@example/icons' }],
+  ['usage only', { usage: '<example-icon></example-icon>' }],
+  ['component only', { component: 'ExampleIcon' }],
+  ['import and usage', { import: '@example/icons', usage: '<example-icon></example-icon>' }],
+  ['import and component', { import: '@example/icons', component: 'ExampleIcon' }],
+  ['usage and component', { usage: '<example-icon></example-icon>', component: 'ExampleIcon' }],
+  ['all identification fields', {
+    import: '@example/icons', usage: '<example-icon></example-icon>', component: 'ExampleIcon',
+  }],
+]) validate(`platform icon accepts ${name}`, platformIcon, value);
+validate('platform icon rejects no identification field', platformIcon, { ariaLabel: 'Example' }, false);
+for (const field of ['import', 'usage', 'component']) {
+  validate(`platform icon rejects non-string ${field}`, platformIcon, { [field]: 42 }, false);
+}
 
 // Historical contracts: no new false/nonempty rule is imposed on old versions.
 for (const version of ['v0.2', 'v0.3']) {

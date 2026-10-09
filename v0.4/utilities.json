@@ -9,7 +9,7 @@
     "$schema": { "type": "string" },
     "schemaVersion": {
       "type": "string",
-      "description": "Schema version (semver)"
+      "description": "Producer-declared schema version. Intentionally accepts any string in v0.4; consumers are responsible for selecting and enforcing the appropriate contract profile."
     },
     "generatedAt": {
       "type": "string",

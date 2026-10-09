@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- The v0.4 icon platform schema now accepts any non-empty combination of `import`, `usage`, and `component`, while still requiring at least one of them.
+- Restored the v0.4 token and DTCG documentation requirement that token replacements resolve to existing tokens, while making clear that referential integrity is enforced by consumers rather than JSON Schema.
+
+### Changed
+
+- Documented and regression-tested that released v0.4 manifests intentionally accept any string for `schemaVersion`; profile enforcement remains a consumer responsibility, and any narrowing is deferred to a future contract decision.
+- Expected token manifest fixtures are now validated against both v0.3 and v0.4.
+
 ## 0.4.2 — 2026-10-06
 
 ### Changed
