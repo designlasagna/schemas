@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:designlasagna:test:future-dtcg-metadata-reservation",
+  "title": "UNVERSIONED DRAFT — Future DTCG author metadata reservation",
+  "description": "Test-only candidate narrowing for the value of $extensions[\"recipes.designlasagna\"]. This is not a released or production-enabled contract. It reserves metadata.extensions for generated manifest output by rejecting the author-side key whenever it is present.",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "not": {
+        "required": ["extensions"]
+      }
+    }
+  }
+}

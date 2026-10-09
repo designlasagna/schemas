@@ -91,6 +91,48 @@ The fontFamily case is easy to get wrong: DTCG font families are arrays, and `re
 ### R6 — Foreign extensions are preserved (MUST)
 DTCG 5.2.3 requires tools to preserve extension data they do not understand. Any `$extensions` key other than `recipes.designlasagna` is copied verbatim to `metadata.extensions`. On write-back the editor must restore them byte-for-byte. Real files carry `com.figma.*` and Tokens Studio blocks; dropping them silently corrupts the source.
 
+#### FUTURE contract reservation — unversioned draft, not production-enabled
+
+A future contract will reserve manifest `metadata.extensions` for the resolver's
+generated envelope of foreign DTCG namespaces. No next schema version has been
+chosen. **This policy is not enabled in any released schema, including v0.4.**
+The test-only candidate fragment lives at
+[`test/fixtures/FUTURE-dtcg-metadata-reservation.schema.json`](../test/fixtures/FUTURE-dtcg-metadata-reservation.schema.json)
+and is composed with the actual v0.4 `TokenExtensions` definition only in tests.
+It is not exported or included in the npm package.
+
+Under that future authoring contract,
+`$extensions["recipes.designlasagna"].metadata` remains open for custom metadata,
+but an `extensions` property is rejected whenever present, including `null`, `{}`,
+or a populated value. Sibling foreign namespaces remain valid and are the sole
+source of generated manifest `metadata.extensions`:
+
+```json
+{
+  "$extensions": {
+    "recipes.designlasagna": {
+      "metadata": { "owner": "design-systems" }
+    },
+    "com.figma": { "variableId": "VariableID:19211:71" }
+  }
+}
+```
+
+Migration for authors currently nesting foreign data under the reserved key:
+
+1. Move each foreign namespace from
+   `$extensions["recipes.designlasagna"].metadata.extensions` to a sibling key
+   of `$extensions["recipes.designlasagna"]` in the DTCG `$extensions` object.
+2. Keep unrelated custom fields in the Lasagna `metadata` object; if a custom
+   field itself happens to be named `extensions`, rename it before opting into a
+   future contract.
+3. Continue accepting generated manifests that contain `metadata.extensions`.
+   That output envelope is intentional and remains valid under v0.4.
+
+The schema candidate enforces only the authoring shape. Preserving sibling
+foreign namespaces and generating the manifest envelope are resolver semantics,
+covered here by fixture assertions rather than expressible by that fragment.
+
 ### R7 — a11y contrast is computed, not authored
 Ratios are derived from resolved colors and `relations` of type `contrast-pair`. Because ratios differ per mode, `wcagContrast` uses the **per-condition map form** — this resolves RFC open question 6. In the example, `color.bg.primary` is 10.19 (light) and 7.09 (dark).
 
