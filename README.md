@@ -46,6 +46,26 @@ npm install @designlasagna/schemas ajv-cli
 ajv validate -s node_modules/@designlasagna/schemas/v0.4/tokens.json -r node_modules/@designlasagna/schemas/v0.4/lifecycle.json -d dist/tokens.json
 ```
 
+### v0.4 utility manifest shape
+
+A v0.4 utility manifest must choose exactly one root representation, with neither
+preferred: use root `utilities` for a flat list, or root `categories` for a
+grouped list whose entries live in each `categories[].utilities` array. Do not
+provide both root fields, and do not omit both.
+
+```json
+{ "schemaVersion": "0.4.0", "utilities": [{ "name": "display-block" }] }
+```
+
+```json
+{
+  "schemaVersion": "0.4.0",
+  "categories": [
+    { "name": "Display", "utilities": [{ "name": "display-block" }] }
+  ]
+}
+```
+
 ### Programmatic
 
 ```js

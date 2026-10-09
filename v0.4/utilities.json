@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://designlasagna.recipes/schemas/v0.4/utilities.json",
   "title": "Design System Utilities Manifest",
-  "description": "Schema for resolved utility manifests consumed by language servers and tooling.",
+  "description": "Schema for resolved utility manifests consumed by language servers and tooling. A manifest must use exactly one root representation: flat utilities or grouped categories. Neither representation is preferred.",
   "type": "object",
   "required": ["schemaVersion"],
   "properties": {
@@ -20,10 +20,12 @@
     "variantPatterns": { "$ref": "#/definitions/VariantPatterns" },
     "categories": {
       "type": "array",
+      "description": "Grouped root representation. Utility entries are nested in each category's utilities array; do not also provide root utilities.",
       "items": { "$ref": "#/definitions/Category" }
     },
     "utilities": {
       "type": "array",
+      "description": "Flat root representation. Utility entries appear directly in this array; do not also provide root categories.",
       "items": { "$ref": "#/definitions/UtilityClass" }
     }
   },
@@ -70,6 +72,7 @@
         },
         "utilities": {
           "type": "array",
+          "description": "Utility entries belonging to this category in the grouped root representation. This nested collection is distinct from root utilities.",
           "items": { "$ref": "#/definitions/UtilityClass" }
         }
       }

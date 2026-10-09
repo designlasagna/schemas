@@ -9,6 +9,7 @@
 
 ### Changed
 
+- Clarified and regression-tested that v0.4 utility manifests choose exactly one equally supported root representation: flat `utilities` or grouped `categories` containing nested `utilities`.
 - Documented and regression-tested that released v0.4 manifests intentionally accept any string for `schemaVersion`; profile enforcement remains a consumer responsibility, and any narrowing is deferred to a future contract decision.
 - Expected token manifest fixtures are now validated against both v0.3 and v0.4.
 

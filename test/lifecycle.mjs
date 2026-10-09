@@ -79,8 +79,20 @@ for (const format of ['tokens', 'utilities', 'icons']) {
   one[format][0].status = 'removed';
   validate(`${format}: conflict is structurally valid`, fn, one);
 }
-const nested = { schemaVersion: '0.4.0', categories: [{ name: 'spacing', utilities: example.utilities.utilities }] };
-validate('nested utilities lifecycle', ajv.getSchema(`${base}v0.4/utilities.json`), nested);
+const validateUtilities = ajv.getSchema(`${base}v0.4/utilities.json`);
+const flatUtilities = { schemaVersion: '0.4.0', utilities: [{ name: 'p-1' }] };
+const groupedUtilities = { schemaVersion: '0.4.0', categories: [] };
+const nestedUtilities = {
+  schemaVersion: '0.4.0',
+  categories: [{ name: 'spacing', utilities: example.utilities.utilities }],
+};
+validate('utilities root accepts flat utilities', validateUtilities, flatUtilities);
+validate('utilities root accepts grouped categories', validateUtilities, groupedUtilities);
+validate('utilities root rejects both representations', validateUtilities,
+  { ...flatUtilities, categories: groupedUtilities.categories }, false);
+validate('utilities root rejects neither representation', validateUtilities,
+  { schemaVersion: '0.4.0' }, false);
+validate('categories[].utilities accepts nested utility entries', validateUtilities, nestedUtilities);
 
 const platformIcon = fragment('icons#PlatformIcon');
 for (const [name, value] of [
