@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- v0.4 `resolved` accepts a non-empty array of strings, one per layer, for multi-layer shadows and gradient stops. Validators older than 0.4.4 reject these values.
+
 ## 0.4.3 — 2026-10-13
 
 ### Fixed

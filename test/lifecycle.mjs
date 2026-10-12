@@ -111,6 +111,16 @@ for (const field of ['import', 'usage', 'component']) {
   validate(`platform icon rejects non-string ${field}`, platformIcon, { [field]: 42 }, false);
 }
 
+// resolved accepts a non-empty array of strings since 0.4.4 (layered values).
+const token = fragment('tokens#Token');
+const withResolved = value => ({ id: 'shadow.raised', resolved: { base: value } });
+validate('resolved accepts a string array', token, withResolved(['0px 2px 4px 0px #000000', 'inset 0px 8px 4px 0px #000000']));
+validate('resolved accepts a single-item string array', token, withResolved(['#ff0000 0%']));
+validate('resolved rejects an empty array', token, withResolved([]), false);
+validate('resolved rejects an array of objects', token, withResolved([{ color: '#000000' }]), false);
+validate('resolved rejects an array of numbers', token, withResolved([0.4, 0, 0.2, 1]), false);
+validate('resolved still rejects booleans', token, withResolved(true), false);
+
 // Historical contracts: no new false/nonempty rule is imposed on old versions.
 for (const version of ['v0.2', 'v0.3']) {
   for (const format of version === 'v0.2' ? ['tokens', 'utilities'] : ['tokens', 'utilities', 'icons']) {

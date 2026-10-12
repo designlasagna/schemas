@@ -76,17 +76,19 @@ Otherwise file-per-mode forces authors to duplicate every description and usage 
 One dimension → bare values (`light`, `dark`). Two or more → sorted `dimension:value` segments joined by `/`. Nesting is **not available** — it is ambiguous with `CompositeValue`. Full grammar and rationale: [`condition-keys.md`](./condition-keys.md).
 
 ### R5 — Value serialization
-`resolved` permits only `string`, `number`, or `CompositeValue`. So:
+`resolved` permits `string`, `number`, `CompositeValue`, or (since 0.4.4, v0.4 only) a non-empty array of strings. So:
 
 | DTCG `$value` | `resolved` | Rule |
 |---|---|---|
 | `{colorSpace, components, hex}` | `"#00427a"` | hex string for web; `format.colorSpace` records the space |
 | `{value: 16, unit: "px"}` | `"16px"` | concatenated |
-| `["Inter", "Helvetica", "sans-serif"]` | `"Inter, Helvetica, sans-serif"` | **arrays are not valid in `resolved`** — must be joined |
+| `["Inter", "Helvetica", "sans-serif"]` | `"Inter, Helvetica, sans-serif"` | font families are joined |
+| shadow `[{…}, {…}]` | `["0px 2px 4px 0px #000000", "inset 0px 8px 4px 0px #000000"]` | one string per layer (v0.4) |
+| gradient `[{color, position}, …]` | `["#ff0000 0%", "#0000ff 100%"]` | one string per stop (v0.4) |
 | `700` | `700` | number passthrough |
 | typography object | `CompositeValue` | each sub-value serialized by the rules above |
 
-The fontFamily case is easy to get wrong: DTCG font families are arrays, and `resolved` has no array branch.
+The fontFamily case is easy to get wrong: DTCG font families are arrays, but `resolved` keeps them as one joined string. Only layered values (multi-layer shadows, gradient stops) use the string array, and only under v0.4. v0.3 has no array branch, and validators older than 0.4.4 reject one.
 
 ### R6 — Foreign extensions are preserved (MUST)
 DTCG 5.2.3 requires tools to preserve extension data they do not understand. Any `$extensions` key other than `recipes.designlasagna` is copied verbatim to `metadata.extensions`. On write-back the editor must restore them byte-for-byte. Real files carry `com.figma.*` and Tokens Studio blocks; dropping them silently corrupts the source.
