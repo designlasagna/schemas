@@ -1,17 +1,19 @@
 # Changelog
 
-## Unreleased
+## 0.4.3 — 2026-10-13
 
 ### Fixed
 
-- The v0.4 icon platform schema now accepts any non-empty combination of `import`, `usage`, and `component`, while still requiring at least one of them.
-- Restored the v0.4 token and DTCG documentation requirement that token replacements resolve to existing tokens, while making clear that referential integrity is enforced by consumers rather than JSON Schema.
+- v0.4 icon platforms accept any combination of `import`, `usage` and `component`, as long as at least one is present.
+- v0.4 token and DTCG docs again say a `replacement` must name an existing token. Consumers enforce this; the schema can't.
 
 ### Changed
 
-- Clarified and regression-tested that v0.4 utility manifests choose exactly one equally supported root representation: flat `utilities` or grouped `categories` containing nested `utilities`.
-- Documented and regression-tested that released v0.4 manifests intentionally accept any string for `schemaVersion`; profile enforcement remains a consumer responsibility, and any narrowing is deferred to a future contract decision.
-- Expected token manifest fixtures are now validated against both v0.3 and v0.4.
+- v0.4 utility manifests use either root `utilities` or root `categories`, never both. Now documented and tested.
+- v0.4 accepts any `schemaVersion` string on purpose. Now documented and tested.
+- Token manifest fixtures are validated against both v0.3 and v0.4.
+- README and lifecycle docs describe v0.4 as published and note that the v0.2/v0.3 `$id`s moved in 0.4.0. README examples use v0.4.
+- `docs/dtcg-mapping.md` notes that a future contract will reserve `recipes.designlasagna.metadata.extensions`. v0.4 is unchanged.
 
 ## 0.4.2 — 2026-10-06
 
