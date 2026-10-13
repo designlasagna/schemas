@@ -93,6 +93,14 @@ validate('utilities root rejects both representations', validateUtilities,
 validate('utilities root rejects neither representation', validateUtilities,
   { schemaVersion: '0.4.0' }, false);
 validate('categories[].utilities accepts nested utility entries', validateUtilities, nestedUtilities);
+validate('utility variants accept states and responsive', validateUtilities,
+  { schemaVersion: '0.4.0', utilities: [{ name: 'p-1', variants: { states: ['hover'], responsive: true } }] });
+validate('utility variants accept design-system-specific kinds', validateUtilities,
+  { schemaVersion: '0.4.0', utilities: [{ name: 'p-1', variants: { colorScheme: true, print: ['print'] } }] });
+validate('utility variants still type-check states', validateUtilities,
+  { schemaVersion: '0.4.0', utilities: [{ name: 'p-1', variants: { states: 'hover' } }] }, false);
+validate('utility variants still type-check responsive', validateUtilities,
+  { schemaVersion: '0.4.0', utilities: [{ name: 'p-1', variants: { responsive: 'yes' } }] }, false);
 
 const platformIcon = fragment('icons#PlatformIcon');
 for (const [name, value] of [

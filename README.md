@@ -100,7 +100,6 @@ Tokens and utilities support optional `platforms` objects for multi-platform des
 ```json
 {
   "id": "color.bg.primary",
-  "cssVariable": "--ds-color-bg-primary",
   "platforms": {
     "web": { "reference": "--ds-color-bg-primary" },
     "ios": { "reference": "DsTokens.color.bgPrimary" },
@@ -131,7 +130,7 @@ Tokens and utilities support optional `platforms` objects for multi-platform des
 }
 ```
 
-Web-only manifests work without `platforms` — `cssVariable` and `properties` serve as shorthands for the web platform.
+Web-only manifests work without `platforms`. The older `cssVariable` and `properties` shorthands are still accepted in v0.4 but are legacy: prefer `platforms.web.reference` and `platforms.web.properties` in new manifests.
 
 ## Deprecation Object
 
@@ -170,6 +169,10 @@ quarters are display-only and do not derive dates or removed status:
 | 30–90 days away | ⚠️ Warning |
 | < 30 days away | 🔴 Error |
 | Past due | 🔴 Error |
+
+## Schema policy
+
+Native manifest schemas stay open: unknown fields are accepted, and tools such as the language server warn about them instead. Only Design Lasagna's own DTCG authoring namespace, and objects that must be closed for the schema to work, reject unknown fields. See [Open schemas, warning tools](docs/openness.md) before proposing any stricter constraint.
 
 ## Releases and validation
 

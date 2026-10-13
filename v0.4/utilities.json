@@ -118,7 +118,8 @@
         },
         "properties": {
           "type": "object",
-          "description": "DEPRECATED in v0.3 — use platforms.web.properties instead.",
+          "deprecated": true,
+          "description": "Legacy: still accepted in v0.4, superseded by platforms.web.properties since v0.3. Prefer platforms.web.properties in new manifests.",
           "additionalProperties": { "type": "string" }
         },
         "tokens": {
@@ -131,6 +132,7 @@
     },
     "UtilityVariants": {
       "type": "object",
+      "description": "Variant kinds this utility supports. `states` and `responsive` are defined; other keys name design-system-specific variant kinds (for example colorScheme or print) and are accepted.",
       "properties": {
         "states": {
           "oneOf": [
@@ -149,8 +151,7 @@
           "type": "boolean",
           "description": "Whether this utility supports responsive breakpoint variants"
         }
-      },
-      "additionalProperties": false
+      }
     },
     "VariantPatterns": {
       "type": "object",
