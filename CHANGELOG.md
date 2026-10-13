@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Changed
+
+- v0.4 utility `variants` accept variant kinds beyond `states` and `responsive`, such as `colorScheme` or `print`, so a utility can declare support for every kind its design system defines in `variantPatterns`. `states` and `responsive` keep their types. This only relaxes validation.
+- v0.4 token `PlatformMapping` describes why it stays closed.
+
 ### Documentation
 
 - Recorded why `usage` was removed from platform mappings in `docs/decisions/0001-remove-platform-mapping-usage.md`, recorded keeping the mapping closed in `docs/decisions/0002-keep-platform-mapping-closed.md`, and added the open-schemas policy in `docs/openness.md`.
