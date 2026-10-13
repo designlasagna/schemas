@@ -100,7 +100,6 @@ Tokens and utilities support optional `platforms` objects for multi-platform des
 ```json
 {
   "id": "color.bg.primary",
-  "cssVariable": "--ds-color-bg-primary",
   "platforms": {
     "web": { "reference": "--ds-color-bg-primary" },
     "ios": { "reference": "DsTokens.color.bgPrimary" },
@@ -131,7 +130,7 @@ Tokens and utilities support optional `platforms` objects for multi-platform des
 }
 ```
 
-Web-only manifests work without `platforms` — `cssVariable` and `properties` serve as shorthands for the web platform.
+Web-only manifests work without `platforms`. The older `cssVariable` and `properties` shorthands are still accepted in v0.4 but are legacy: prefer `platforms.web.reference` and `platforms.web.properties` in new manifests.
 
 ## Deprecation Object
 

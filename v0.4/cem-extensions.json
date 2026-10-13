@@ -31,21 +31,13 @@
     },
     "AttributeExtensions": {
       "type": "object",
-      "description": "Composable extension fields for a CEM attribute entry. Attribute-level lifecycle and deprecated values are independent axes; this fragment remains permissive for standard CEM siblings.",
+      "description": "Composable extension fields for a CEM attribute entry: the lifecycle fields plus enum values and deprecated values. Attribute-level lifecycle and deprecated values are independent axes; this fragment remains permissive for standard CEM siblings.",
+      "allOf": [{ "$ref": "#/definitions/LifecycleFields" }],
       "properties": {
         "enum": {
           "type": "array",
           "items": { "type": "string" }
         },
-        "deprecated": {
-          "oneOf": [
-            { "type": "boolean" },
-            { "type": "string" }
-          ]
-        },
-        "status": { "$ref": "lifecycle.json#/definitions/Status" },
-        "removal": { "type": "string" },
-        "replacement": { "type": "string" },
         "deprecatedValues": {
           "type": "array",
           "items": { "$ref": "#/definitions/DeprecatedValue" }

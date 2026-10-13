@@ -118,7 +118,8 @@
         },
         "properties": {
           "type": "object",
-          "description": "DEPRECATED in v0.3 — use platforms.web.properties instead.",
+          "deprecated": true,
+          "description": "Legacy: still accepted in v0.4, superseded by platforms.web.properties since v0.3. Prefer platforms.web.properties in new manifests.",
           "additionalProperties": { "type": "string" }
         },
         "tokens": {

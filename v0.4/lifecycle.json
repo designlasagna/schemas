@@ -30,24 +30,9 @@
     },
     "StrictDeprecated": {
       "type": "object",
-      "required": ["message"],
-      "additionalProperties": false,
-      "description": "Closed deprecation record for the DTCG extension namespace.",
-      "properties": {
-        "message": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Human-readable reason plus migration guidance. Never parsed for lifecycle meaning."
-        },
-        "removal": {
-          "type": "string",
-          "description": "Removal target: ISO date YYYY-MM-DD, semver X.Y.Z, or quarter YYYY-Qn. Only ISO dates drive time-aware severity."
-        },
-        "replacement": {
-          "type": "string",
-          "description": "Machine-readable replacement identifier, scoped by entity type."
-        }
-      }
+      "description": "Closed deprecation record for the DTCG extension namespace: the Deprecated record with no other properties.",
+      "allOf": [{ "$ref": "#/definitions/Deprecated" }],
+      "propertyNames": { "enum": ["message", "removal", "replacement"] }
     },
     "NativeDeprecation": {
       "oneOf": [

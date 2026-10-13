@@ -6,6 +6,8 @@
 
 - v0.4 utility `variants` accept variant kinds beyond `states` and `responsive`, such as `colorScheme` or `print`, so a utility can declare support for every kind its design system defines in `variantPatterns`. `states` and `responsive` keep their types. This only relaxes validation.
 - v0.4 token `PlatformMapping` describes why it stays closed.
+- v0.4 `StrictDeprecated` reuses `Deprecated`, and CEM `AttributeExtensions` reuses `LifecycleFields`, instead of repeating their fields. Both validate exactly as before; new fixtures in `examples/lifecycle/schema-cases.json` pin the behaviour. Documentation tools must read fields inherited through `allOf`.
+- v0.4 token `cssVariable` and utility `properties` are marked `deprecated: true` and described as legacy fields that are still accepted, instead of "DEPRECATED in v0.3".
 
 ### Documentation
 

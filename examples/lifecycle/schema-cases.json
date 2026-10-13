@@ -31,5 +31,16 @@
   {"name":"CEM value message nonempty", "fragment":"lifecycle#DeprecatedValue", "valid":false, "data":{"value":"old", "message":""}},
   {"name":"CEM value type", "fragment":"lifecycle#DeprecatedValue", "valid":false, "data":{"value":1, "message":"Old"}},
   {"name":"CEM cssPart status type", "fragment":"cem-extensions#CssPartExtensions", "valid":false, "data":{"status":9}},
-  {"name":"CEM cssProperty replacement type", "fragment":"cem-extensions#CssPropertyExtensions", "valid":false, "data":{"replacement":true}}
+  {"name":"CEM cssProperty replacement type", "fragment":"cem-extensions#CssPropertyExtensions", "valid":false, "data":{"replacement":true}},
+  {"name":"strict deprecated full record", "fragment":"lifecycle#StrictDeprecated", "valid":true, "data":{"message":"Use gap.md.", "removal":"2027-01-01", "replacement":"gap.md"}},
+  {"name":"strict deprecated rejects unknown property", "fragment":"lifecycle#StrictDeprecated", "valid":false, "data":{"message":"Old", "note":"x"}},
+  {"name":"strict deprecated requires message", "fragment":"lifecycle#StrictDeprecated", "valid":false, "data":{"replacement":"gap.md"}},
+  {"name":"strict deprecated rejects empty message", "fragment":"lifecycle#StrictDeprecated", "valid":false, "data":{"message":""}},
+  {"name":"strict deprecated rejects non-string removal", "fragment":"lifecycle#StrictDeprecated", "valid":false, "data":{"message":"Old", "removal":2027}},
+  {"name":"attribute lifecycle and deprecated values", "fragment":"cem-extensions#AttributeExtensions", "valid":true, "data":{"name":"size", "enum":["sm", "md"], "status":"deprecated", "deprecated":"Use variant.", "removal":"2027-Q1", "replacement":"variant", "deprecatedValues":[{"value":"sm", "message":"Use md."}]}},
+  {"name":"attribute rejects non-string removal", "fragment":"cem-extensions#AttributeExtensions", "valid":false, "data":{"name":"size", "removal":1}},
+  {"name":"attribute rejects non-string replacement", "fragment":"cem-extensions#AttributeExtensions", "valid":false, "data":{"name":"size", "replacement":["variant"]}},
+  {"name":"attribute rejects object deprecated", "fragment":"cem-extensions#AttributeExtensions", "valid":false, "data":{"name":"size", "deprecated":{"message":"Old"}}},
+  {"name":"attribute rejects non-string enum values", "fragment":"cem-extensions#AttributeExtensions", "valid":false, "data":{"name":"size", "enum":[1]}},
+  {"name":"attribute rejects incomplete deprecated value", "fragment":"cem-extensions#AttributeExtensions", "valid":false, "data":{"name":"size", "deprecatedValues":[{"value":"sm"}]}}
 ]
