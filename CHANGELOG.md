@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Documentation
+
+- Recorded why `usage` was removed from platform mappings in `docs/decisions/0001-remove-platform-mapping-usage.md`, recorded keeping the mapping closed in `docs/decisions/0002-keep-platform-mapping-closed.md`, and added the open-schemas policy in `docs/openness.md`.
+
 ## 0.4.4 — 2026-10-13
 
 ### Added
@@ -52,7 +58,7 @@ Adds the v0.4 contracts under `v0.4/`, built on a shared lifecycle fragment. v0.
 
 ### Removed
 
-- The redundant `usage` property from platform mappings in `v0.3/tokens.json` and `v0.3/dtcg-extensions.json`. Each mapping now contains only its required `reference`, and mappings reject other properties. This was committed after 0.3.4, so published 0.3.x releases still accept `usage`; 0.4.0 is the first release with it removed.
+- The redundant `usage` property from platform mappings in `v0.3/tokens.json` and `v0.3/dtcg-extensions.json`. The platform key plus `reference` already say how to use a token, so consumers derive usage syntax instead (see `docs/decisions/0001-remove-platform-mapping-usage.md`). Each mapping now contains only its required `reference`, and mappings reject other properties. This was committed after 0.3.4, so published 0.3.x releases still accept `usage`; 0.4.0 is the first release with it removed.
 
 ### All contracts
 

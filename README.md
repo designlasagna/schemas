@@ -171,6 +171,10 @@ quarters are display-only and do not derive dates or removed status:
 | < 30 days away | 🔴 Error |
 | Past due | 🔴 Error |
 
+## Schema policy
+
+Native manifest schemas stay open: unknown fields are accepted, and tools such as the language server warn about them instead. Only Design Lasagna's own DTCG authoring namespace, and objects that must be closed for the schema to work, reject unknown fields. See [Open schemas, warning tools](docs/openness.md) before proposing any stricter constraint.
+
 ## Releases and validation
 
 The v0.4 contract shipped in 0.4.0, a breaking pre-1.0 minor release that retains v0.2/v0.3 exports for existing consumers. See the [migration guide](docs/lifecycle-migration.md) for the compatibility window and consumer migration path.
