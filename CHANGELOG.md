@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- v0.4 token platform mappings (`tokens.json` and `dtcg-extensions.json`) accept fields beyond `reference`, so a design system can add its own per-platform data. `reference` stays required. This only relaxes validation; validators older than this release reject extra fields. See `docs/decisions/0003-open-platform-mapping.md`, which supersedes 0002.
+
+### Documentation
+
+- `docs/openness.md` now says tools ignore fields they don't support and at most note them in their logs, instead of warning about them. Authors validate against a version when they choose to.
+
 ## 0.4.5 — 2026-10-14
 
 ### Changed

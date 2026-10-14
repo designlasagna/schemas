@@ -1,6 +1,6 @@
 # 0002 — Keep token platform mappings closed
 
-- **Status:** accepted, for now
+- **Status:** superseded by [0003](0003-open-platform-mapping.md) on 2026-10-15
 - **Decided:** 2026-10-14
 - **Applies to:** `PlatformMapping` in `v0.4/tokens.json` and
   `v0.4/dtcg-extensions.json`.
