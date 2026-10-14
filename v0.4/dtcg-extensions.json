@@ -193,8 +193,8 @@
 
     "PlatformMapping": {
       "type": "object",
+      "description": "What the token is called on this platform. Only `reference` is defined; the entry accepts other per-platform data a design system needs.",
       "required": ["reference"],
-      "additionalProperties": false,
       "properties": {
         "reference": { "type": "string" }
       }

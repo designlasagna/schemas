@@ -119,6 +119,16 @@ for (const field of ['import', 'usage', 'component']) {
   validate(`platform icon rejects non-string ${field}`, platformIcon, { [field]: 42 }, false);
 }
 
+// Platform mappings are open since 0.4.6 (decision 0003); `reference` stays required.
+for (const file of ['tokens', 'dtcg-extensions']) {
+  const mapping = fragment(`${file}#PlatformMapping`);
+  validate(`${file} platform mapping accepts reference only`, mapping, { reference: '--ds-color-primary' });
+  validate(`${file} platform mapping accepts extra fields`, mapping,
+    { reference: '--ds-color-primary', usage: 'var(--ds-color-primary)', since: '2.0.0' });
+  validate(`${file} platform mapping requires reference`, mapping, { usage: 'var(--x)' }, false);
+  validate(`${file} platform mapping rejects non-string reference`, mapping, { reference: 42 }, false);
+}
+
 // resolved accepts a non-empty array of strings since 0.4.4 (layered values).
 const token = fragment('tokens#Token');
 const withResolved = value => ({ id: 'shadow.raised', resolved: { base: value } });

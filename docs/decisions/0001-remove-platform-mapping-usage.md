@@ -37,8 +37,9 @@ was a bad example, not a use case the schema meant to support.
 - Published 0.3.x releases (up to 0.3.4) still accept `usage`; the `v0.3/`
   files shipped from 0.4.0 do not. The hosted `/schemas/v0.3/` files are
   byte-frozen.
-- The same change closed the mapping (`additionalProperties: false`). Keeping
-  it closed is decided separately in [0002](0002-keep-platform-mapping-closed.md).
+- The same change closed the mapping (`additionalProperties: false`). It was
+  reopened in 0.4.6 by [0003](0003-open-platform-mapping.md); `usage` is still
+  not part of the schema.
 
 ## Migrating
 
